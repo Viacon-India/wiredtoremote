@@ -1,0 +1,84 @@
+nav bar 
+
+
+
+mt-[69px] sm:mt-[80px] md:mt-[99px] lg:mt-[81.60px] xl:mt-[87.40px] 2xl:mt-[91.20px] 3xl:mt-[97px];
+
+
+
+pb-[80px] sm:pb-[90px] md:pb-[100px] lg:pb-[110px] xl:pb-[120px] 2xl:pb-[130px] 3xl:pb-[140px]
+
+
+
+
+
+
+#091a27cc
+
+
+https://stepbystepbusiness.com/business-ideas/start-an-event-planning-business/
+
+/* .menu_icon:hover .one {
+  @apply animate-[width_2s_ease_infinite];
+}
+.menu_icon:hover .two {
+  @apply animate-[width1_2s_ease_infinite];
+}
+
+.menu_icon:hover .three {
+  @apply animate-[width2_2s_ease_infinite];
+} */
+
+@keyframes width {
+  0% {
+    width: 12.5px;
+  }
+  25% {
+    width: 25px;
+  }
+  50% {
+    width: 8.32px;
+  }
+  75% {
+    width: 25px;
+  }
+  100% {
+    width: 12.5px;
+  }
+}
+
+@keyframes width1 {
+  0% {
+    width: 16.65px;
+  }
+  25% {
+    width: 8.32px;
+  }
+  50% {
+    width: 25px;
+  }
+  75% {
+    width: 8.32px;
+  }
+  100% {
+    width: 16.65px;
+  }
+}
+
+@keyframes width2 {
+  0% {
+    width: 20.08px;
+  }
+  25% {
+    width: 4.16px;
+  }
+  50% {
+    width: 16.65px;;
+  }
+  75% {
+    width: 25px;
+  }
+  100% {
+    width: 20.08px;
+  }
+}
