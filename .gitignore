@@ -1,0 +1,52 @@
+# ignore ALL .log files
+*.log
+
+# ignore ALL files in ANY directory named wp-admin
+wp-admin/
+
+# ignore ALL files in ANY directory named wp-includes
+wp-includes/
+
+# ignore ALL files in ANY directory named wp-content/plugins
+wp-content/plugins/
+
+# ignore ALL files in ANY directory named wp-content/uploads
+wp-content/uploads/
+
+
+wp-activate.php
+wp-blog-header.php
+.htaccess
+license.txt
+readme.html
+wp-comments-post.php
+wp-config-sample.php
+wp-config.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+wp-config.php
+
+# ignore ALL .sql files
+*.sql
+
+# ignore ALL .zip files
+*.zip
+
+# ignore ALL .rar files
+*.rar
+
+# ignore ALL twenty theme files
+wp-content/themes/twenty*
+
+# ignore ALL node modules
+wp-content/themes/korean-theme/node_modules/
+
+
+old-theme/
