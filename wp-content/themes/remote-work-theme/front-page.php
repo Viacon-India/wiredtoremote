@@ -4,7 +4,7 @@ $cat1_slug = get_option('category_1');
 $cat2_slug = get_option('category_2');
 $cat3_slug = get_option('category_3');
 $cat4_slug = get_option('category_4');
-$cat5_slug = get_option('category_5');
+// $cat5_slug = get_option('category_5');
 
 $start_article = get_option('start_article_id');
 $grow_article = get_option('grow_article_id');
@@ -42,14 +42,14 @@ $cat4_posts = new WP_Query(array(
     'order'             => 'DESC',
     'posts_per_page'    => 6
 ));
-$cat5_posts = new WP_Query(array(
-    'post_type'        => 'post',
-    'category_name'     => $cat5_slug,
-    'post_status'       => 'publish',
-    'orderby'           => 'date',
-    'order'             => 'DESC',
-    'posts_per_page'    => 6
-));
+// $cat5_posts = new WP_Query(array(
+//     'post_type'        => 'post',
+//     'category_name'     => $cat5_slug,
+//     'post_status'       => 'publish',
+//     'orderby'           => 'date',
+//     'order'             => 'DESC',
+//     'posts_per_page'    => 6
+// ));
 $taxonomies = get_terms(array(
     'taxonomy'    => 'idea',
     'orderby'       => 'count',
@@ -88,7 +88,13 @@ $taxonomies = get_terms(array(
 </section>
 
 
-<?php if ($cat1_posts->have_posts()) :
+<?php 
+// print_r($cat1_posts->posts);
+// echo '<br>';
+// // echo $cat1_posts->posts->post_title;
+// // print_r($cat1_posts->posts);
+// echo '<br>';
+if ($cat1_posts->have_posts()) :
     $cat1 = get_category_by_slug($cat1_slug); ?>
     <section class="home-idea-sec">
         <div class=" container mx-auto ">
@@ -117,26 +123,6 @@ $taxonomies = get_terms(array(
 <?php endif; ?>
 
 
-<?php if (!empty($taxonomies)) : ?>
-    <section class="home-business-ideas-sec">
-        <div class="container mx-auto">
-            <h2 class="home-page-common-underline-title font-light">
-                Business <span class="font-bold">Ideas</span>
-            </h2>
-            <div class="common-half-dsc-wrapper mt-[20px]">
-                <p class="common-half-dsc">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                </p>
-            </div>
-            <div class="home-business-ideas-grid-wrapper">
-                <?php foreach ($taxonomies as $taxonomy) :
-                    get_template_part('template-parts/idea', 'card', array('idea' => $taxonomy));
-                endforeach; ?>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
 
 
 <?php if ($cat2_posts->have_posts()) :
@@ -168,34 +154,6 @@ $taxonomies = get_terms(array(
 <?php endif; ?>
 
 
-<?php if (!empty($start_article) && !is_null(get_post($start_article)) && 'publish' === get_post_status($start_article)) :
-    $start_article_tips = get_post_meta($start_article, "tips", true);
-    if (is_array($start_article_tips) && !empty($start_article_tips)) :
-        $start_article_tips = array_values($start_article_tips); ?>
-        <section class="home-start-business-sec ">
-            <div class=" container mx-auto ">
-                <h2 class="home-page-common-underline-title font-light">
-                    <span class="font-bold">Start a Business:</span>&nbsp;
-                    <span> 10 Reasons To Start a business</span>
-                </h2>
-                <div class="home-common-slider-wrapper">
-                    <div class="swiper2">
-                        <div class="swiper-wrapper">
-                            <?php foreach ($start_article_tips as $key => $tip) :
-                                get_template_part('template-parts/slider', 'card', array('key' => $key, 'tip' => $tip, 'link' => get_permalink($start_article)));
-                            endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="home-idea-sec-common-btn-wrapper">
-                    <a href="<?php echo get_permalink($start_article); ?>" class="common-btn">
-                        view more <span class="icon-arrow"></span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    <?php endif; ?>
-<?php endif; ?>
 
 
 <?php if ($cat3_posts->have_posts()) :
@@ -227,36 +185,6 @@ $taxonomies = get_terms(array(
 <?php endif; ?>
 
 
-<?php if (!empty($grow_article) && !is_null(get_post($grow_article)) && 'publish' === get_post_status($grow_article)) :
-    $grow_article_tips = get_post_meta($grow_article, "tips", true);
-    if (is_array($grow_article_tips) && !empty($grow_article_tips)) :
-        $grow_article_tips = array_values($grow_article_tips); ?>
-        <section class="home-grow-your-business-sec">
-            <div class="container mx-auto">
-                <h2 class="home-page-common-underline-title font-light">
-                    <span class=" font-bold">
-                        Grow your Business:
-                    </span>
-                    10 Actionable Tips
-                </h2>
-                <div class="home-common-slider-wrapper">
-                    <div class="swiper2">
-                        <div class="swiper-wrapper">
-                            <?php foreach ($grow_article_tips as $key => $tip) :
-                                get_template_part('template-parts/slider', 'card', array('key' => $key, 'tip' => $tip, 'link' => get_permalink($grow_article)));
-                            endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="home-idea-sec-common-btn-wrapper">
-                    <a href="<?php echo get_permalink($grow_article); ?>" class="common-btn">
-                        view more <span class="icon-arrow"></span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    <?php endif; ?>
-<?php endif; ?>
 
 
 <?php if ($cat4_posts->have_posts()) :
@@ -288,39 +216,8 @@ $taxonomies = get_terms(array(
 <?php endif; ?>
 
 
-<?php if (!empty($exit_article) && !is_null(get_post($exit_article)) && 'publish' === get_post_status($exit_article)) :
-    $exit_article_tips = get_post_meta($exit_article, "tips", true);
-    if (is_array($exit_article_tips) && !empty($exit_article_tips)) :
-        $exit_article_tips = array_values($exit_article_tips); ?>
-        <section class="home-exit-strategy-sec">
-            <div class="container mx-auto">
-                <h2 class="home-page-common-underline-title font-light">
-                    <span class=" font-bold">
-                        Exit Strategy:
-                    </span>
-                    10 Tips to Exit Strategically
-                </h2>
-                <div class="home-common-slider-wrapper">
-                    <div class="swiper2">
-                        <div class="swiper-wrapper">
-                            <?php foreach ($exit_article_tips as $key => $tip) :
-                                get_template_part('template-parts/slider', 'card', array('key' => $key, 'tip' => $tip, 'link' => get_permalink($exit_article)));
-                            endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="home-idea-sec-common-btn-wrapper">
-                    <a href="<?php echo get_permalink($exit_article); ?>" class="common-btn">
-                        view more <span class="icon-arrow"></span>
-                    </a>
-                </div>
-            </div>
-        </section>
-    <?php endif; ?>
-<?php endif; ?>
 
-
-<?php if ($cat5_posts->have_posts()) :
+<?php /* if ($cat5_posts->have_posts()) :
     $cat5 = get_category_by_slug($cat5_slug); ?>
     <section class="home-blog-sec">
         <div class="container mx-auto">
@@ -338,7 +235,7 @@ $taxonomies = get_terms(array(
             </div>
         </div>
     </section>
-<?php endif; ?>
+<?php endif; */ ?>
 
 
 <?php get_footer(); ?>

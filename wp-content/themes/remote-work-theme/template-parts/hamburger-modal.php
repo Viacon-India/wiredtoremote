@@ -43,7 +43,7 @@
                         if (!empty($linkedin) && (filter_var($linkedin, FILTER_VALIDATE_URL) !== false)) echo '<a class="ham-social-icon" href="'.$linkedin.'" rel="noopener noreferrer nofollow" target="_blank" aria-label="social_Link"><span class="icon-linkedin"></span></a>';
                     echo '</div>';
                 endif; ?>
-                <p class="ham-copyright">© <?php echo date('Y'); ?>. All rights reserved by <a href="https://www.redhatmedia.net/" rel="noopener noreferrer nofollow" target="_blank" aria-label="social_Link">RedHatMedia.</a></p>
+                <p class="ham-copyright">© <?php echo date('Y'); ?>. All rights reserved.</p>
             </div>
         </div>
     </div>

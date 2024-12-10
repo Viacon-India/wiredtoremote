@@ -1,0 +1,5 @@
+http://localhost/wiredtoremote/
+JOb Listing - http://localhost/wiredtoremote/job-search/
+Category: http://localhost/wiredtoremote/category/digital-nomads/
+Author: http://localhost/wiredtoremote/author/wiredtoremote/
+Resume Upload Page : http://localhost/wiredtoremote/submit-resume/
