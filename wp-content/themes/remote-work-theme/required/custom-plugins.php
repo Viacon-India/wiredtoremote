@@ -319,7 +319,7 @@ add_action( 'edited_idea', 'save_taxonomy_meta_data' );
 function custom_add_meta_boxes() {
 	global $post;
 	add_meta_box( 'fast-facts', 'Fast Facts', 'fast_facts_callback', 'post', 'side', 'high' );
-	add_meta_box('pros_cons_metabox', 'Pros And Cons', 'pros_cons_callback', '', 'normal', 'high');
+	// add_meta_box('pros_cons_metabox', 'Affiliate Fields', 'pros_cons_callback', '', 'normal', 'high');
 	$articles = array(get_option('start_article_id'),get_option('grow_article_id'),get_option('exit_article_id'));
 	if(in_array($post->ID, $articles)){
 		add_meta_box('custom_tips_metabox', 'Tips', 'custom_tips_callback', '', 'normal', 'high');
