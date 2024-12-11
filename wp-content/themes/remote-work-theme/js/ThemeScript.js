@@ -233,7 +233,7 @@ $(document).ready(function(){
   
   
   // Contact Form Button Script
-  $('.contact-us-page-dsc-wrapper .wpcf7 form input[type="submit"]').hide().after('<button type="submit" class="contact-from-contact-button">get in touch <span class="icon-arrow"></span></button>');
+  $('.contact-us-page-dsc-wrapper .wpcf7 form input[type="submit"]').hide().after('<button type="submit" class="contact-from-contact-button">Submit <span class="icon-arrow"></span></button>');
   $('.contact-us-page-dsc-wrapper .wpcf7 form input[type="text"], .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"], .contact-us-page-dsc-wrapper .wpcf7 form textarea').after('<span class="focus-border"></span>');
 
   
