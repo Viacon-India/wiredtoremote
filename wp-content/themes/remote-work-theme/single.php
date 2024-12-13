@@ -65,15 +65,6 @@
                         </div>
 
                         <h1 class="single-post-title"><?php echo the_title_attribute('echo=0'); ?></h1>
-                        <div class="post-written-by-wrapper">
-                            <p class="post-written-by">
-                                <span>Written by:</span>
-                                <a href="<?php echo $author_URL; ?>">
-                                    <span class="font-bold"><?php echo $author_name; ?></span>
-                                </a>
-                            </p>
-                            <?php if (!empty($author_desc)) echo '<div class="post-written-by-dsc-wrapper"><p class="post-written-by-dsc">' . strip_tags($author_desc) . '</p></div>'; ?>
-                        </div>
                     </div>
                     <div class="single-banner-image-sec">
                         <figure class="single-banner-img-controller">

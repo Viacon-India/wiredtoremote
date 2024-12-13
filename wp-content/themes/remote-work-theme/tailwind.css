@@ -1277,7 +1277,7 @@ transition: max-height 0.2s ease-out;
 }
 
 .single-banner-inner{
-  @apply relative flex flex-col lg:flex-row  gap-[36px]
+  @apply relative flex items-start flex-col lg:flex-row  gap-[36px]
 }
 
 .single-banner-content-sec{
@@ -1731,7 +1731,7 @@ transition: max-height 0.2s ease-out;
 }
 
 .comment-from-comment-button{
-    @apply w-full sm:w-fit text-white bg-primary relative flex font-[500] border-none items-center justify-center rounded-[4px] gap-[6px]
+    @apply w-full sm:w-fit text-white bg-[#000080] relative flex font-[500] border-none items-center justify-center rounded-[4px] gap-[6px]
     text-[16px] sm:text-[16px] md:text-[16px] lg:text-[16px] uppercase px-[21px] py-[13px] border-[2px];
 }
 
@@ -1995,13 +1995,13 @@ transition: max-height 0.2s ease-out;
   @apply relative flex justify-center mt-[56px] sm:mt-[62px] md:mt-[74px] lg:mt-[74px] 
 }
 
-.author-page-grid-wrapper{
+/* .author-page-grid-wrapper{
   @apply relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-[46px] 
   sm:gap-x-[20px] md:gap-x-[20px] lg:gap-x-[24px] xl:gap-x-[28px] 2xl:gap-x-[32px] 3xl:gap-x-[36px]  
   sm:gap-y-[36px] md:gap-y-[46px] lg:gap-y-[46px] 
   mt-[56px] sm:mt-[78px] md:mt-[80px] lg:mt-[88px] xl:mt-[98px] 2xl:mt-[108px] 3xl:mt-[118px];
 
-}
+} */
 
 
 /* contact us page */
@@ -2009,8 +2009,8 @@ transition: max-height 0.2s ease-out;
   @apply relative mt-[69px] sm:mt-[80px] md:mt-[99px] lg:mt-[81.60px] xl:mt-[87.40px] 2xl:mt-[91.20px] 3xl:mt-[97px];
 }
 .contact-us-page-underline-title{
-  @apply relative text-[44px] sm:text-[50px] md:text-[54px] lg:text-[45px] xl:text-[48px] 2xl:text-[51px] 3xl:text-[54px] 
-  mb-[24px] md:mb-[24px] uppercase font-bold
+  @apply relative text-[32px] md:text-[54px] lg:text-[45px] xl:text-[48px] 2xl:text-[51px] 3xl:text-[54px] 
+  uppercase font-bold
 }
 
 .contact-us-page-underline-title::before{
@@ -2056,7 +2056,7 @@ transition: max-height 0.2s ease-out;
 .contact-f-s-name-email-wrapper, .contact-us-page-dsc-wrapper .wpcf7 form>p:first-of-type{
   @apply relative flex flex-col md:flex-row w-full
   gap-[20px] sm:gap-[22px] md:gap-[24px] lg:gap-[26px] xl:gap-[29px] 2xl:gap-[32px] 3xl:gap-[34px]
-  mb-[20px] sm:mb-[22px] md:mb-[24px] lg:mb-[26px] xl:mb-[29px] 2xl:mb-[32px] 3xl:mb-[34px]
+  mb-[16px] md:mb-[16px] lg:mb-[22px] xl:mb-[22px] 2xl:mb-[24px] 3xl:mb-[24px] 
 }
 
 .contact-from-common-mb-for-email-name-sec, .contact-us-page-dsc-wrapper .wpcf7 form>p:first-of-type>span{
@@ -2078,20 +2078,20 @@ transition: max-height 0.2s ease-out;
   py-[12px] sm:py-[12px] md:py-[12px] px-[16px] sm:px-[17px] md:px-[18px] lg:px-[20px] xl:px-[21px] 2xl:px-[22px] 3xl:px-[24px] outline-none text-[#20202066];
 }
 
-.contact-from-common-input:focus, .contact-us-page-dsc-wrapper .wpcf7 form input[type="text"]:focus, .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"]:focus {
-  @apply outline-none placeholder:text-secondary;
+.contact-from-common-input:focus, .contact-us-page-dsc-wrapper .wpcf7 form input[type="text"]:focus, .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"]:focus, .contact-us-page-dsc-wrapper .wpcf7 form select:focus {
+  @apply outline-none;
 }
 
-.contact-from-common-input ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="text"] ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"] ~ span.focus-border{
+.contact-from-common-input ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="text"] ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"] ~ span.focus-border, .wpcf7 form select ~ span.focus-border{
   @apply  absolute w-0 h-0.5 bg-primary transition-[0.4s] left-0 bottom-0
 }
 
-.contact-from-common-input:focus ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="text"]:focus ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"]:focus ~ span.focus-border{
+.contact-from-common-input:focus ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="text"]:focus ~ span.focus-border, .contact-us-page-dsc-wrapper .wpcf7 form input[type="email"]:focus ~ span.focus-border, .wpcf7 form select:focus ~ span.focus-border{
   @apply w-full transition-[0.4s]
 }
 
 .contact-from-common-mb, .contact-us-page-dsc-wrapper .wpcf7 form>p:nth-of-type(2) {
-  @apply relative w-full mb-[20px] sm:mb-[22px] md:mb-[24px] lg:mb-[26px] xl:mb-[29px] 2xl:mb-[32px] 3xl:mb-[34px];
+  @apply relative w-full mb-[16px] md:mb-[16px] lg:mb-[22px] xl:mb-[22px] 2xl:mb-[24px] 3xl:mb-[24px] ;
 }
 
 .contact-from-common-textarea, .contact-us-page-dsc-wrapper .wpcf7 form textarea {
@@ -2112,16 +2112,16 @@ transition: max-height 0.2s ease-out;
 }
 
 .contact-from-contact-button-wrapper, .contact-us-page-dsc-wrapper .wpcf7 form>p:nth-of-type(4){
-  @apply relative flex my-[34px] md:my-[34px] lg:my-[36.5px] xl:my-[39px] 2xl:my-[41.5px] 3xl:my-[44px] 
+  @apply relative flex mb-[16px] md:mb-[16px] lg:mb-[22px] xl:mb-[22px] 2xl:mb-[24px] 3xl:mb-[24px] 
 }
 
 .contact-from-common-text-aria-mb, .contact-us-page-dsc-wrapper .wpcf7 form>p:nth-of-type(3){
-  @apply relative w-full mb-[16px] sm:mb-[17px] md:mb-[18px] lg:mb-[19px] xl:mb-[20px] 2xl:mb-[23px] 3xl:mb-[24px]
+  @apply relative w-full mb-[16px] md:mb-[16px] lg:mb-[22px] xl:mb-[22px] 2xl:mb-[24px] 3xl:mb-[24px] 
 }
 
 .contact-from-contact-button, .contact-us-page-dsc-wrapper .wpcf7 form input[type="submit"]{
     @apply w-full sm:w-fit text-white bg-[#000080] relative flex font-medium border-none items-center justify-center rounded-[4px] gap-[6px]
-    text-[16px] sm:text-[16px] md:text-[16px] lg:text-[16px] uppercase px-[21px] py-[13px] border-[2px];
+    text-[16px] sm:text-[16px] md:text-[16px] lg:text-[16px] uppercase px-[21px] py-[13px] border-[2px] mt-6 xl:mt-8 2xl:mt-[50px];
 }
 
 .contact-from-contact-button .icon-arrow , .contact-us-page-dsc-wrapper .wpcf7 form input[type="submit"] .icon-arrow { 
@@ -2155,11 +2155,11 @@ transition: max-height 0.2s ease-out;
 }
 
 .author-page-author-card-img-sec{
-  @apply col-end-[span_12] sm:col-end-[span_5] md:col-end-[span_4] lg:col-end-[span_3] flex flex-row gap-[12px] sm:gap-0 sm:flex-col items-center
+  @apply col-end-[span_12] sm:col-end-[span_5] md:col-end-[span_4] lg:col-end-[span_2] flex flex-row gap-[12px] sm:gap-0 sm:flex-col items-center
 }
 
 .author-page-author-card-img-sec-figure{
-  @apply w-[100px] h-[100px] sm:w-full sm:h-full rounded-[6px] sm:rounded-[10px] border border-solid border-secondary p-[10px] sm:p-[20px]
+  @apply w-[100px] h-[100px] md:w-full md:h-full rounded-[6px] sm:rounded-[10px] border border-solid border-secondary p-[10px] sm:p-[16px]
 }
 
 

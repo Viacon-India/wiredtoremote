@@ -38,7 +38,7 @@ $instagram = get_the_author_meta('instagram', $author_id); ?>
             <div class="author-page-author-card-content-sec">
                 <h2 class="author-page-author-card-title hidden sm:block"><?php echo $display_name; ?></h2>
                 <?php echo (!empty($desc)) ? '<div class="author-page-author-card-dsc-wrapper"><p class="author-page-author-card-dsc">' . $desc . '</p></div>' : ''; ?>
-                <span class="author-card-line"></span>
+                <!-- <span class="author-card-line"></span> -->
                 <?php if (!empty($facebook) && (filter_var($facebook, FILTER_VALIDATE_URL) !== false) || (!empty($twitter) && (filter_var($twitter, FILTER_VALIDATE_URL) !== false)) || (!empty($linkedin) && (filter_var($linkedin, FILTER_VALIDATE_URL) !== false)) || (!empty($instagram) && (filter_var($instagram, FILTER_VALIDATE_URL) !== false))) :
                     echo '<div class="author-page-author-card-social-icon-wrapper">';
                     if (!empty($facebook) && (filter_var($facebook, FILTER_VALIDATE_URL) !== false)) echo '<a class="author-card-social-icon" href="' . $facebook . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="author_social_Link"><span class="icon-facebook"></span></a>';
