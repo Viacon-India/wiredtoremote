@@ -142,3 +142,79 @@ get_header();
 
 get_footer();
 ?>
+
+
+
+-------------INDEED----------------
+
+
+
+<?php
+/* Template Name: Indeed Job Testing API */
+get_header(); ?>
+
+<div style="margin-top:50px;"></div>
+
+<?php
+$indeed_rapidapi_jobs_saved_data = $_SESSION['indeed_rapidapi_jobs'];
+
+    if(empty($indeed_rapidapi_jobs_saved_data) || (time() - $_SESSION['indeed_rapidapi_loggedtime']) > 432000) {
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+        	CURLOPT_URL => "https://indeed46.p.rapidapi.com/job?country=CA&sort=-1&page_size=50",
+        	CURLOPT_RETURNTRANSFER => true,
+        	CURLOPT_ENCODING => "",
+        	CURLOPT_MAXREDIRS => 10,
+        	CURLOPT_TIMEOUT => 30,
+        	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        	CURLOPT_CUSTOMREQUEST => "GET",
+        	CURLOPT_HTTPHEADER => [
+        		"x-rapidapi-host: indeed46.p.rapidapi.com",
+        		"x-rapidapi-key: ac36d5deeemsh88bafde352c8b87p1c36bcjsn4b1a67ef1172"
+        	],
+        ]);
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+        
+        if ($err) {
+        	echo "cURL Error #:" . $err;
+        } else {
+        	echo $response;
+        }
+        
+        $indeed_rapidapi_jobs_json = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+        
+        if ($err) {
+        	echo "cURL Error #:" . $err;
+        } else {
+        	
+        	$_SESSION['indeed_rapidapi_jobs'] = $indeed_rapidapi_jobs_json;
+            $_SESSION['indeed_rapidapi_loggedtime'] = time();
+            
+            echo 'Generated:';
+            echo '<pre>';
+            print_r(json_decode($linkedin_rapidapi_jobs_json)->data);
+            echo '</pre>';
+            
+        }
+        
+    } else {
+        
+        echo 'Saved data:';
+        echo '<pre>';
+        print_r(json_decode($indeed_rapidapi_jobs_saved_data)->data);
+        echo '</pre>';
+        
+    }
+
+
+get_footer();
