@@ -1,6 +1,58 @@
 <?php
-/* Template Name: Job Listing Temp */
+/* Template Name: Final Job Listing Temp */
 get_header();
+
+$linkedin_rapidapi_jobs_saved_data = $_SESSION['linkedin_rapidapi_jobs'];
+
+if(empty($linkedin_rapidapi_jobs_saved_data) || (time() - $_SESSION['linkedin_rapidapi_loggedtime']) > 432000) { //5days = 432000
+
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+            CURLOPT_URL => "https://linkedin-api8.p.rapidapi.com/search-jobs?keywords=developer&locationId=103644278&datePosted=anyTime&sort=mostRelevant",
+        // CURLOPT_URL => "https://linkedin-api8.p.rapidapi.com/search-jobs?datePosted=anyTime&sort=mostRelevant",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => [
+            "x-rapidapi-host: linkedin-api8.p.rapidapi.com",
+            "x-rapidapi-key: ac36d5deeemsh88bafde352c8b87p1c36bcjsn4b1a67ef1172"
+        ],
+    ]);
+    
+    $linkedin_rapidapi_jobs_json = curl_exec($curl);
+    $err = curl_error($curl);
+    
+    curl_close($curl);
+    
+    if ($err) {
+        echo "cURL Error #:" . $err;
+    } else {
+        
+        $_SESSION['linkedin_rapidapi_jobs'] = $linkedin_rapidapi_jobs_json;
+        $_SESSION['linkedin_rapidapi_loggedtime'] = time();
+        
+        echo 'Generated:';
+        // echo '<pre>';
+        // print_r(json_decode($linkedin_rapidapi_jobs_json));
+        // echo '</pre>';
+        
+        $lndin_array_data = json_decode($linkedin_rapidapi_jobs_json)->data;
+        
+    } 
+} else {
+    
+    echo 'Saved data:';
+    // echo '<pre>';
+    // print_r(json_decode($linkedin_rapidapi_jobs_saved_data)->data);
+    // echo '</pre>';
+    
+    $lndin_array_data = json_decode($linkedin_rapidapi_jobs_saved_data)->data;
+    
+}
 ?>
 
 <section class="pt-[145px]">
@@ -21,65 +73,59 @@ get_header();
         </div>
         <div class="job-card-sec grid grid-cols-4 gap-9 mt-10">
             <?php
-            for ($i = 0; $i < 12; $i++) {
+            foreach($lndin_array_data as $ldata) {
+                
+                $job_link = $ldata->url;
+                $company_name = $ldata->company->name; 
+                $company_url = $ldata->company->url;
+                
                 echo '<div class="job-card">
-                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_48_3051)">
-                        <path d="M25 0C11.1922 0 0 11.1922 0 25C0 38.8063 11.1922 50 25 50C38.8078 50 50 38.8063 50 25C50 11.1922 38.8078 0 25 0Z" fill="#333333" />
-                        <path d="M10.2063 33.6893C14.0375 37.0158 18.2344 40.108 23.8781 40.1096C23.9875 40.1096 24.0985 40.108 24.2125 40.1049C27.8031 40.0221 31.8641 38.8096 35.0172 36.8299L35.036 36.8174C35.4485 36.5689 35.8625 36.2893 36.25 35.9768C36.4938 35.7971 36.6594 35.5189 36.6594 35.2268C36.65 34.7064 36.2094 34.3564 35.7344 34.3564C35.586 34.3549 35.4313 34.3893 35.286 34.4596C35.125 34.5236 34.9578 34.5971 34.8031 34.6643L34.5719 34.7611L34.275 34.8814V34.883C31.0328 36.1971 27.6266 36.9689 24.475 37.0393C24.3594 37.0424 24.2438 37.0424 24.1281 37.0424C19.1719 37.0439 15.1266 34.7439 11.0485 32.4783C10.9047 32.4033 10.7594 32.3643 10.6172 32.3643C10.4313 32.3643 10.2453 32.433 10.1078 32.5611C9.97033 32.6893 9.88908 32.8768 9.89065 33.0674C9.89065 33.3174 10.0219 33.5439 10.2063 33.6893Z" fill="#FEFEFE" />
-                        <path d="M40.1043 32.5203C40.0918 32.2047 40.0262 31.9656 39.8933 31.7672L39.8808 31.7469L39.8652 31.7266C39.7308 31.5797 39.6027 31.5266 39.4637 31.4641C39.0512 31.3047 38.448 31.2203 37.7246 31.2188C37.2027 31.2188 36.6262 31.2687 36.0496 31.3937L36.048 31.3563L35.4683 31.5484L35.459 31.5547L35.1308 31.6609V31.675C34.7449 31.8344 34.3949 32.0359 34.0699 32.2688C33.8668 32.4219 33.698 32.6219 33.6887 32.9281C33.684 33.0953 33.7699 33.2891 33.9105 33.4031C34.0512 33.5172 34.2137 33.5547 34.3574 33.5547C34.3933 33.5547 34.4246 33.5531 34.4543 33.5484L34.4793 33.5469L34.5027 33.5422C34.7855 33.4812 35.2012 33.4422 35.6855 33.3734C36.1012 33.3281 36.5418 33.2922 36.923 33.2922C37.1933 33.2922 37.4371 33.3109 37.6043 33.3469C37.6887 33.3656 37.7496 33.3859 37.7855 33.4047C37.798 33.4094 37.8074 33.4125 37.8105 33.4172C37.8183 33.4406 37.8277 33.5 37.8262 33.5844C37.8324 33.9031 37.6949 34.4984 37.5105 35.0766C37.3293 35.6562 37.1074 36.2375 36.9621 36.6234C36.9262 36.7125 36.9074 36.8109 36.9074 36.9172C36.9027 37.0719 36.9668 37.2594 37.1012 37.3859C37.2308 37.5094 37.4012 37.5609 37.5433 37.5609H37.5496C37.7637 37.5578 37.9449 37.4719 38.1027 37.35C39.5777 36.0219 40.0902 33.9031 40.1121 32.7125L40.1043 32.5203Z" fill="#FEFEFE" />
-                        <path d="M26.6174 18.297C25.7502 18.3626 24.7486 18.4282 23.7486 18.561C22.2143 18.7642 20.6814 19.0298 19.4143 19.6313C16.9471 20.6313 15.2783 22.7657 15.2783 25.9017C15.2783 29.8392 17.8127 31.8407 21.0158 31.8407C22.083 31.8407 22.9502 31.7048 23.7486 31.5079C25.0174 31.1063 26.0814 30.3735 27.3518 29.0376C28.0846 30.0376 28.2846 30.5063 29.5518 31.5735C29.8846 31.7048 30.2189 31.7048 30.4846 31.5095C31.2877 30.8407 32.6861 29.6392 33.4174 28.972C33.7533 28.7063 33.6846 28.3048 33.483 27.9735C32.7518 27.0392 32.0174 26.2376 32.0174 24.4345V18.4298C32.0174 15.8938 32.2174 13.5579 30.3518 11.8251C28.8189 10.4251 26.4174 9.88916 24.5502 9.88916H23.7502C20.3502 10.0876 16.7486 11.5563 15.9471 15.761C15.8127 16.2954 16.2158 16.4938 16.4814 16.5595L20.2143 17.0267C20.6158 16.9595 20.8174 16.6251 20.8814 16.2938C21.2158 14.8251 22.4158 14.0907 23.7502 13.9579H24.0189C24.8189 13.9579 25.6846 14.2923 26.1518 14.9595C26.6846 15.761 26.6205 16.8267 26.6205 17.7626L26.6174 18.297ZM25.8846 26.2345C25.4174 27.1657 24.6174 27.7657 23.7502 27.9704C23.6158 27.9704 23.4174 28.0345 23.2158 28.0345C21.7502 28.0345 20.883 26.8985 20.883 25.2329C20.883 23.0954 22.1518 22.0954 23.7518 21.6282C24.6189 21.4298 25.6189 21.3595 26.6205 21.3595V22.161C26.6174 23.7001 26.683 24.9001 25.8846 26.2345Z" fill="#FEFEFE" />
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_48_3051">
-                            <rect width="50" height="50" fill="white" />
-                        </clipPath>
-                    </defs>
-                </svg>
-                <p class="job-organization">Amazon <span>5 days a go</span></p>
-                <h3 class="job-title">Senior UI/UX Designer</h3>
+                <img src="'.$ldata->company->logo.'" height="50" width="50"/>
+                <p class="job-organization">'.$ldata->benefits.' <span>'.$ldata->postDate.'</span></p>
+                <h3 class="job-title">'.$ldata->title.'</h3>
                 <ul class="job-type">
-                    <li>Part time</li>
-                    <li>Remote</li>
+                    <li>'.$ldata->type.'</li>
                 </ul>
                 <div class="flex justify-between pt-[10px]">
                     <div>
                         <p class="job-stipend">$120/Hr</p>
-                        <span class="job-location">san Francisco</span>
+                        <span class="job-location">'.$ldata->location.'</span>
                     </div>
-                    <button class="job-apply-btn">Apply
-                        <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 9.01271L1.48241 4.99976L0 0.986816H1.60381L7 4.99976L1.60381 9.01271H0Z" fill="white" />
-                        </svg>
-                    </button>
+                    <a href="'.$ldata->url.'" target="_blank">
+                        <button class="job-apply-btn">Apply
+                            <svg width="7" height="10" viewBox="0 0 7 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0 9.01271L1.48241 4.99976L0 0.986816H1.60381L7 4.99976L1.60381 9.01271H0Z" fill="white" />
+                            </svg>
+                        </button>
+                    </a>
                 </div>
             </div>';
             }
             ?>
         </div>
-        <div class="pagination-sec">
-            <a href="" class="pagination-btn">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.8337 10.0003H4.16699M4.16699 10.0003L10.0003 15.8337M4.16699 10.0003L10.0003 4.16699" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <span>Previous</span>
-            </a>
-            <div class="page-numbers">
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>...</button>
-                <button>8</button>
-                <button>9</button>
-                <button>10</button>
-            </div>
-            <a href="" class="pagination-btn">
-                <span>Next</span>
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.16699 10.0003H15.8337M15.8337 10.0003L10.0003 4.16699M15.8337 10.0003L10.0003 15.8337" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </a>
-        </div>
+        <!--<div class="pagination-sec">-->
+        <!--    <a href="" class="pagination-btn">-->
+        <!--        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+        <!--            <path d="M15.8337 10.0003H4.16699M4.16699 10.0003L10.0003 15.8337M4.16699 10.0003L10.0003 4.16699" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />-->
+        <!--        </svg>-->
+        <!--        <span>Previous</span>-->
+        <!--    </a>-->
+        <!--    <div class="page-numbers">-->
+        <!--        <button>1</button>-->
+        <!--        <button>2</button>-->
+        <!--        <button>3</button>-->
+        <!--        <button>...</button>-->
+        <!--        <button>8</button>-->
+        <!--        <button>9</button>-->
+        <!--        <button>10</button>-->
+        <!--    </div>-->
+        <!--    <a href="" class="pagination-btn">-->
+        <!--        <span>Next</span>-->
+        <!--        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+        <!--            <path d="M4.16699 10.0003H15.8337M15.8337 10.0003L10.0003 4.16699M15.8337 10.0003L10.0003 15.8337" stroke="#344054" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round" />-->
+        <!--        </svg>-->
+        <!--    </a>-->
+        <!--</div>-->
     </div>
 </section>
 

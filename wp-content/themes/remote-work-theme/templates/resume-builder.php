@@ -128,7 +128,7 @@ get_header();
         });
     });
 	
-	$(document).on('submit','#tech_contact_form', function (e) {
+	$(document).on('change','#tech_contact_form', function (e) {
         e.preventDefault();
         var _data = $(this).serialize();
         $.post(Front.ajaxurl, _data, function (resp) {
