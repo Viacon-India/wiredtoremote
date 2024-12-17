@@ -88,7 +88,7 @@ $taxonomies = get_terms(array(
 </section>
 
 
-<?php 
+<?php
 // print_r($cat1_posts->posts);
 // echo '<br>';
 // // echo $cat1_posts->posts->post_title;
@@ -98,11 +98,11 @@ if ($cat1_posts->have_posts()) :
     $cat1 = get_category_by_slug($cat1_slug); ?>
     <section class="home-idea-sec">
         <div class=" container mx-auto ">
-            <img class="line-one" src="<?php echo get_template_directory_uri(); ?>/images/line-one.svg" alt="">
             <h2 class="home-page-common-title font-bold home-def-title">
                 <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
                 <?php echo $cat1->name; ?>
             </h2>
+            <p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
             <?php echo (!empty($cat1->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat1->description . '</p></div>' : ''; ?>
             <div class="cat-common-slider-wrapper">
                 <div class="swiper">
@@ -127,13 +127,12 @@ if ($cat1_posts->have_posts()) :
 
 <?php if ($cat2_posts->have_posts()) :
     $cat2 = get_category_by_slug($cat2_slug); ?>
-    <section class="home-start-sec">
+    <section class="home-start-sec bg-[#DDF5FF]">
         <div class=" container mx-auto ">
-            <img class="line-tow" src="<?php echo get_template_directory_uri(); ?>/images/line-tow.svg" alt="section line tow">
-            <h2 class="home-page-common-title font-bold home-def-title">
-                <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
+            <h2 class="home-page-common-title separator-sec-title">
                 <?php echo $cat2->name; ?>
             </h2>
+            <p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
             <?php echo (!empty($cat2->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat2->description . '</p></div>' : ''; ?>
             <div class="cat-common-slider-wrapper">
                 <div class="swiper">
@@ -156,15 +155,43 @@ if ($cat1_posts->have_posts()) :
 
 
 
+
+<section class="home-grow-sec">
+    <div class="container mx-auto">
+        <div class="flex flex-col items-center lg:flex-row">
+            <div class="w-full lg:w-[50%]">
+                <h2 class="text-[#091A27] text-[32px] sm:text-[50px] md:text-[54px] leading-[1] font-bold">How To Reduce Machine Downtime In Manufacturing</h2>
+                <p class="text-[18px] text-[#091A27] italic pt-4 md:pt-6 lg:pt-10 w-full lg:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                <div class="home-idea-sec-common-btn-wrapper !justify-start">
+                    <a href="#" class="common-btn">
+                        Explore the Start category <span class="icon-arrow"></span>
+                    </a>
+                </div>
+                <figure class="w-full h-fit pt-10">
+                    <img class="w-full h-full object-contain" src="<?php echo get_template_directory_uri(); ?>/images/line-art.svg" alt="lineArt">
+                </figure>
+            </div>
+            <div class="w-full lg:w-[50%]">
+                <figure class="w-full h-fit">
+                    <img class="w-full h-full object-contain" src="<?php echo get_template_directory_uri(); ?>/images/line-art2.svg" alt="lineArt2">
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
 <?php if ($cat3_posts->have_posts()) :
     $cat3 = get_category_by_slug($cat3_slug); ?>
-    <section class="home-grow-sec">
-        <div class="container mx-auto">
-            <img class="line-tow" src="<?php echo get_template_directory_uri(); ?>/images/line-tow.svg" alt="section line tow">
-            <h2 class="home-page-common-title font-bold home-def-title">
-                <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
+    <section class="home-exit-sec bg-[#DDF5FF]">
+        <div class="container mx-auto ">
+            <h2 class="home-page-common-title separator-sec-title">
                 <?php echo $cat3->name; ?>
             </h2>
+            <p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
             <?php echo (!empty($cat3->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat3->description . '</p></div>' : ''; ?>
             <div class="cat-common-slider-wrapper">
                 <div class="swiper">
@@ -186,12 +213,10 @@ if ($cat1_posts->have_posts()) :
 
 
 
-
 <?php if ($cat4_posts->have_posts()) :
     $cat4 = get_category_by_slug($cat4_slug); ?>
-    <section class="home-exit-sec">
-        <div class="container mx-auto ">
-            <img class="line-tow" src="<?php echo get_template_directory_uri(); ?>/images/line-tow.svg" alt="section line tow">
+    <section class="home-grow-sec">
+        <div class="container mx-auto">
             <h2 class="home-page-common-title font-bold home-def-title">
                 <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
                 <?php echo $cat4->name; ?>
