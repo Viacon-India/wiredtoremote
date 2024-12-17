@@ -12,6 +12,9 @@ $children = get_terms($archive_object->taxonomy, array('parent' => $cat_id, 'ord
 
 <section class="category-page">
     <div class="container mx-auto">
+        <figure class="w-full h-[200px] md:h-[450px] mb-6 md:mb-8">
+            <img class="w-full h-full object-cover rounded-[6px]" src="<?php echo get_template_directory_uri(); ?>/images/jobListing.jpg" alt=" footer bg" />
+        </figure>
         <div class="breadcrumbs-wrappers">
             <?php echo '<ul class="breadcrumbs">';
             echo '<li class="bread-list"><a href="' . home_url() . '">Home</a></li>';
@@ -28,6 +31,7 @@ $children = get_terms($archive_object->taxonomy, array('parent' => $cat_id, 'ord
         <div class="category-page-title-wrapper">
             <h2 class="category-page-title"><?php echo wp_strip_all_tags(single_cat_title('', false)); ?></h2>
         </div>
+        <p class="text-[16px] md:text-[18px] text-[#091A27] pt-4 w-[95%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
         <?php echo (!empty($desc)) ? '<div class="category-page-dsc-wrapper"><p class="category-page-dsc">' . $desc . '</p></div>' : ''; ?>
         <?php if (!empty($children)) :
             echo '<div class="cat-page-common-all-slider-wrapper ">';

@@ -71,9 +71,9 @@
               if ($menu_item->menu_item_parent == 0) :
                 echo '<li class="desk-top-menu-li">';
                 if (!in_array($menu_item->ID, $menu_items_with_children)) :
-                  echo '<a href="' . $menu_item->url . '" class="nav-links"><div class="icon-wrapper">' . category_svg($menu_item->object_id) . '</div>' . $menu_item->title . '</a>';
+                  echo '<a href="' . $menu_item->url . '" class="nav-links">' . $menu_item->title . '</a>';
                 else :
-                  echo '<a href="' . $menu_item->url . '" class="nav-links"><div class="icon-wrapper">' . category_svg($menu_item->object_id) . '</div>' . $menu_item->title . '</a>';
+                  echo '<a href="' . $menu_item->url . '" class="nav-links">' . $menu_item->title . '</a>';
                   echo '<ul class="desk-top-menu-dropdown">';
                   foreach ($header_menu_items as $menu_child_item) :
                     if ($menu_child_item->menu_item_parent == $parent_ID) :
