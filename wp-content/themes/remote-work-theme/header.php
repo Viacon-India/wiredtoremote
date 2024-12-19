@@ -12,25 +12,6 @@
 
   <?php wp_head(); ?>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F12WPWQXFL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'G-F12WPWQXFL');
-  </script>
-
-  <meta name="spr-verification" content="85fc792d2fa829q" />
-  <meta name="b0fbbb8235f1622beeadc4e06d9f0bc4" content="">
-  <meta name='outreach_verification' content='uJHQuTbOJVgFMrh2lafY' />
-  <meta name="linkdoozer-verification" content="3779e227-db75-47f7-a268-651a9466e389" />
-  <meta name='linkatomic-verify-code' content='6cc2e01aa5f4287c8bf645944f237321' />
-
 </head>
 
 <body <?php body_class(); ?>>

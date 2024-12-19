@@ -102,8 +102,7 @@ if ($cat1_posts->have_posts()) :
                 <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
                 <?php echo $cat1->name; ?>
             </h2>
-            <p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-            <?php echo (!empty($cat1->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat1->description . '</p></div>' : ''; ?>
+            <?php echo (!empty($cat1->description)) ? '<p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">' . $cat1->description . '</p>' : ''; ?>
             <div class="cat-common-slider-wrapper">
                 <div class="swiper">
                     <div class="swiper-wrapper">
@@ -132,8 +131,7 @@ if ($cat1_posts->have_posts()) :
             <h2 class="home-page-common-title separator-sec-title">
                 <?php echo $cat2->name; ?>
             </h2>
-            <p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-            <?php echo (!empty($cat2->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat2->description . '</p></div>' : ''; ?>
+            <?php echo (!empty($cat2->description)) ? '<p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">' . $cat2->description . '</p>' : ''; ?>
             <div class="cat-common-slider-wrapper">
                 <div class="swiper">
                     <div class="swiper-wrapper">
@@ -163,8 +161,8 @@ if ($cat1_posts->have_posts()) :
                 <h2 class="text-[#091A27] text-[32px] sm:text-[50px] md:text-[54px] leading-[1] font-bold">How To Reduce Machine Downtime In Manufacturing</h2>
                 <p class="text-[18px] text-[#091A27] italic pt-4 md:pt-6 lg:pt-10 w-full lg:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
                 <div class="home-idea-sec-common-btn-wrapper !justify-start">
-                    <a href="#" class="common-btn">
-                        Explore the Start category <span class="icon-arrow"></span>
+                <a href="<?php echo home_url('submit-resume'); ?>" class="common-btn">
+                        Submit Resume  <span class="icon-arrow"></span>
                     </a>
                 </div>
                 <figure class="w-full h-fit pt-10">
@@ -191,8 +189,7 @@ if ($cat1_posts->have_posts()) :
             <h2 class="home-page-common-title separator-sec-title">
                 <?php echo $cat3->name; ?>
             </h2>
-            <p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-            <?php echo (!empty($cat3->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat3->description . '</p></div>' : ''; ?>
+            <?php echo (!empty($cat3->description)) ? '<p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">' . $cat3->description . '</p>' : ''; ?>
             <div class="cat-common-slider-wrapper">
                 <div class="swiper">
                     <div class="swiper-wrapper">

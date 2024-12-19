@@ -72,10 +72,10 @@
                                 <?php if (shortcode_exists('email-subscribers-form')) :
                                     echo do_shortcode('[email-subscribers-form id="1"]');
                                 endif; ?>
-                                <div class="flex items-start md:items-center gap-2 h-fit">
+                                <!-- <div class="flex items-start md:items-center gap-2 h-fit">
                                     <input class="mt-[4px] md:mt-[0px]" type="checkbox" aria-label="check">
                                     <p class="footer-desc">I consent to the terms and conditions</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

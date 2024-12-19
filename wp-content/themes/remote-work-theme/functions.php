@@ -61,7 +61,7 @@ if (!function_exists('custom_theme_setup')) {
 		add_theme_support('custom-logo');
 		add_theme_support('post-thumbnails');
 
-		add_image_size('single-thumbnail', 702, 428, true);
+		add_image_size('single-thumbnail', 	825, 428, true);
 		add_image_size('listing-thumbnail', 456, 256, true);
 		add_image_size('default-thumbnail', 333, 198, true);
 		add_image_size('sidebar-thumbnail', 63, 63, true);
@@ -160,8 +160,8 @@ function register_my_menus()
 {
 	register_nav_menus(array(
 		'header-menu'		=> 'Header Menu',
-		'useful-menu'		=> 'Useful Menu',
-		'footer-menu'		=> 'Footer Menu'
+		'company-menu'		=> 'Company Menu',
+		'categories-menu'		=> 'Categories Menu'
 	));
 }
 
@@ -183,6 +183,15 @@ function img()
 	</script>
 <?php
 }
+
+
+function SearchFilter($query) {
+    if ($query->is_search) {
+        $query->set('post_type', 'post');
+    }
+    return $query;
+}
+add_filter('pre_get_posts','SearchFilter');
 
 
 //---------------------------------------------Custom Comment Form
