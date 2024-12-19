@@ -36,7 +36,7 @@
                             }
                             echo $breadcrumb;
                         } ?>
-                        <li class="bread-list"><?php echo the_title_attribute('echo=0'); ?></li>
+                        <!-- <li class="bread-list"><?php //echo the_title_attribute('echo=0'); ?></li> -->
                     </ul>
                 </div>
                 <div class="single-banner-inner">

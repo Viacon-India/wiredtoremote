@@ -578,39 +578,40 @@ function about_writer(){
 
 
 //-------------------------------------------------------------------TOC Function
-function toc($html) {
-    if (is_single()) {
-        if (!$html) return $html;
-        $dom = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        libxml_clear_errors();
-        foreach($dom->getElementsByTagName('*') as $element) {
-            if($element->tagName == 'h2' || $element->tagName == 'h3' || $element->tagName == 'h4') {
-				$title_id = str_replace(array(' '),array('-'),rtrim(preg_replace('#[\s]{2,}#',' ',preg_replace('#[^\w\säüöß]#',null,str_replace(array('ä','ü','ö','ß'),array('ae','ue','oe','ss'),html_entity_decode(strtolower(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $element->textContent))))))));
-				$element->setAttribute('id', $title_id);
-				$title_id = str_replace(array(' '),array('-'),rtrim(preg_replace('#[\s]{2,}#',' ',preg_replace('#[^\w\säüöß]#',null,str_replace(array('ä','ü','ö','ß'),array('ae','ue','oe','ss'),html_entity_decode(strtolower(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $element->textContent))))))));
-				$element->setAttribute('id', $title_id);
-            }
-        }
-        $html = $dom->saveHTML();
-    }
-    return $html;
+function toc($content) {
+    $content = preg_replace_callback('/<h2>(.*?)<\/h2>/', function($matches) {
+        $id = $matches[1];
+        return '<h2 id="' . $matches[1] . '">' . $matches[1] . '</h2>';
+    }, $content);
+    
+    $content = preg_replace_callback('/<h3>(.*?)<\/h3>/', function($matches) {
+        $id = $matches[1];
+        return '<h3 id="' . $matches[1] . '">' . $matches[1] . '</h3>';
+    }, $content);
+    
+    $content = preg_replace_callback('/<h4>(.*?)<\/h4>/', function($matches) {
+        $id = $matches[1];
+        return '<h4 id="' . $matches[1] . '">' . $matches[1] . '</h4>';
+    }, $content);
+
+    return $content;
 }
 add_filter('the_content', 'toc');
 
-function table_of_content($li_class, $a_class){
-	$toc = '';
-	$html = get_the_content();
-	$dom = new DOMDocument();
-	libxml_use_internal_errors(true);
-	$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-	libxml_clear_errors();
-	foreach($dom->getElementsByTagName('*') as $element) {
-		if($element->tagName == 'h2' || $element->tagName == 'h3' || $element->tagName == 'h4') {
-			$title_id = str_replace(array(' '),array('-'),rtrim(preg_replace('#[\s]{2,}#',' ',preg_replace('#[^\w\säüöß]#',null,str_replace(array('ä','ü','ö','ß'),array('ae','ue','oe','ss'),html_entity_decode(strtolower(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $element->textContent))))))));
-			$toc .= '<li class="'.$li_class.'"><a href="' . get_the_permalink() . '#'.$title_id . '" id="toc-' . $title_id . '" class="'.$a_class.'">' . $element->textContent . '</a></li>';
-		}
-	}
-	return $toc;
+
+
+function table_of_content($li_class, $a_class) {
+	$content = get_the_content();
+    $heading_links = array();
+    preg_match_all('/<(h2|h3|h4)[^>]*id=["\']([^"\']+)["\'][^>]*>(.*?)<\/\1>/i', $content, $matches);
+    if (!empty($matches)) {
+        foreach ($matches[2] as $index => $id) {
+            $heading_text = strip_tags($matches[3][$index]);
+            $heading_links[] = '<a href="#' . esc_attr($id) . '" class="'.$a_class.'">' . esc_html($heading_text) . '</a>';
+        }
+    }
+    if (!empty($heading_links)) {
+        return '<li class="'.$li_class.'">' . implode('</li><li class="'.$li_class.'">', $heading_links) . '</li>';
+    }
+    return '';
 }
