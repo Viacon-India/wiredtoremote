@@ -46,7 +46,7 @@ wp-config.php
 wp-content/themes/twenty*
 
 # ignore ALL node modules
-wp-content/themes/korean-theme/node_modules/
+wp-content/themes/remote-work-theme/node_modules/
 
 
 old-theme/
