@@ -1,6 +1,10 @@
 <?php
 session_start();
 //---------------------------------------------Custom Theme Settings Path
+if (file_exists(get_template_directory() . '/required/includes.php')) {
+	require_once(get_template_directory() . '/required/includes.php');
+}
+
 if (file_exists(get_template_directory() . '/required/custom-plugins.php')) {
 	require_once(get_template_directory() . '/required/custom-plugins.php');
 }
@@ -13,6 +17,8 @@ if (file_exists(get_template_directory() . '/required/custom-ajax-functions.php'
 if (file_exists(get_template_directory() . '/required/resume-builder-functions.php')) {
 	require_once(get_template_directory() . '/required/resume-builder-functions.php');
 }
+
+
 
 
 //---------------------------------------------Enqueue Script and Style
@@ -85,77 +91,6 @@ if (!function_exists('custom_theme_setup')) {
 	}
 }
 
-
-
-//---------------------------------------------Check and Call Logo
-function logo_url()
-{
-	$logo_url = get_stylesheet_directory_uri() . '/images/SBJ-logo.svg';
-	if (has_custom_logo()) {
-		$custom_logo_id = get_theme_mod('custom_logo');
-		$custom_logo_data = wp_get_attachment_image_src($custom_logo_id, 'full');
-		$custom_logo_url = $custom_logo_data[0];
-		return esc_url($custom_logo_url);
-	} elseif (is_file(realpath($_SERVER["DOCUMENT_ROOT"]) . parse_url($logo_url)['path'])) {
-		$header_img_url = $logo_url;
-		return $header_img_url;
-	} else {
-		return false;
-	}
-}
-
-
-
-//---------------------------------------------Footer Logo
-function footer_logo($wp_customize)
-{
-	$wp_customize->add_setting('footer_logo');
-	$wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'footer_logo', array(
-		'label'    => __('Footer Logo', 'Dream_Land_Estate'),
-		'section'  => 'title_tagline',
-		'settings' => 'footer_logo',
-		'priority'       => 8
-	)));
-}
-add_action('customize_register', 'footer_logo');
-
-
-
-//---------------------------------------------Check and Call Footer Logo
-function footer_logo_url()
-{
-	$footer_logo_url = get_theme_mod('footer_logo');
-	if ($footer_logo_url) {
-		return $footer_logo_url;
-	} else {
-		$footer_logo_url = get_stylesheet_directory_uri() . '/images/footer-logo.svg';
-		if (is_file(realpath($_SERVER["DOCUMENT_ROOT"]) . parse_url($footer_logo_url)['path'])) {
-			return $footer_logo_url;
-		} else {
-			logo_url();
-		}
-	}
-}
-
-
-
-//---------------------------------------------Check and Add Favicon
-function add_favicon()
-{
-	if (!has_site_icon()  && !is_customize_preview()) {
-		$favicon_url = get_stylesheet_directory_uri() . '/images/favicon.png';
-		echo '<link rel="icon" type="image/gif" href="' . $favicon_url . '" />';
-	} else {
-		echo '<link rel="icon" type="image/gif" href="' . wp_get_attachment_image_url(get_option('site_icon'), 'full') . '">';
-	}
-}
-add_action('wp_head', 'add_favicon');
-add_action('login_head', 'add_favicon');
-add_action('admin_head', 'add_favicon');
-// add_action('web_stories_story_head', 'add_favicon');
-
-
-
 //---------------------------------------------Theme Menu
 add_action('init', 'register_my_menus');
 function register_my_menus()
@@ -169,7 +104,7 @@ function register_my_menus()
 
 
 
-//---------------------------------------------Image Function
+//Image Function
 add_action('wp_footer', 'img');
 function img()
 {
@@ -187,16 +122,10 @@ function img()
 }
 
 
-function SearchFilter($query) {
-    if ($query->is_search) {
-        $query->set('post_type', 'post');
-    }
-    return $query;
-}
-add_filter('pre_get_posts','SearchFilter');
 
 
-//---------------------------------------------Custom Comment Form
+
+//Custom Comment Form
 add_filter('comment_form_fields', 'custom_comment_form_fields');
 function custom_comment_form_fields($fields)
 {
@@ -250,18 +179,4 @@ function custom_opengraph_url($url) {
 	}
 }
 
-/*
- * Set post views count using post meta//functions.php
- */
-function customSetPostViews($postID) {
-    $countKey = 'post_views_count';
-    $count = get_post_meta($postID, $countKey, true);
-    if($count==''){
-        $count = 0;
-        delete_post_meta($postID, $countKey);
-        add_post_meta($postID, $countKey, '1');
-    }else{
-        $count++;
-        update_post_meta($postID, $countKey, $count);
-    }
-}
+

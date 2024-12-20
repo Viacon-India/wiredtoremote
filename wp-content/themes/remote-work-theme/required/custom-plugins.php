@@ -116,17 +116,17 @@ function svg_category_fields($term) {
     if (current_filter() == 'category_edit_form_fields') {	
         $svg = get_term_meta( $term->term_id, 'term_svg', true ); 	
         ?><tr class="form-field">
-            <th valign="top" scope="row"><label for="svg"><?php _e('SVG Code'); ?></label></th>
+            <th valign="top" scope="row"><label for="svg"><?php _e('Image URL'); ?></label></th>
             <td>
-				<textarea rows="8" cols="50" name="svg"><?php echo esc_attr( $svg ) ? esc_attr( $svg ) : ''; ?></textarea><br/>
-                <span class="description"><?php _e('Please enter your SVG Code'); ?></span>
+				<input type="text" name="svg" value="<?php echo esc_attr( $svg ) ? esc_attr( $svg ) : ''; ?>">
+                <span class="description"><?php _e('Please enter your image URL'); ?></span>
             </td>
         </tr><?php
 	}elseif (current_filter() == 'category_add_form_fields') {
         ?><div class="form-field">
-            <label for="svg"><?php _e('SVG Code'); ?></label>
+            <label for="svg"><?php _e('Image URL'); ?></label>
             <input type="text" size="40" value=""  name="svg">
-            <p class="description"><?php _e('Please enter your SVG Code'); ?></p>
+            <p class="description"><?php _e('Please enter your Image URL'); ?></p>
         </div><?php
     }
 }
