@@ -8,20 +8,25 @@ $post_count = $GLOBALS['wp_query']->post_count;
 $paged = get_query_var('paged');
 $page_count = $GLOBALS['wp_query']->max_num_pages;
 $post_per_page = get_option('posts_per_page');
-$children = get_terms($archive_object->taxonomy, array('parent' => $cat_id, 'orderby' => 'count', 'order' => 'DESC')); ?>
+$children = get_terms($archive_object->taxonomy, array('parent' => $cat_id, 'orderby' => 'count', 'order' => 'DESC'));
+
+$term_image_url = get_term_meta( $cat_id, 'term_svg', true ); 
+if(empty($term_image_url)) $term_image_url = get_template_directory_uri()."/images/jobListing.jpg";
+
+$cat_name = wp_strip_all_tags(single_cat_title('', false)); ?>
 
 <section class="category-page">
     <div class="container mx-auto">
         <figure class="w-full h-[200px] md:h-[450px] mb-6 md:mb-8">
             <img class="w-full h-full object-cover rounded-[6px]" 
-            src="<?php echo get_template_directory_uri(); ?>/images/jobListing.jpg" 
+            src="<?php echo $term_image_url; ?>" 
             alt=" footer bg" />
         </figure>
         <div class="breadcrumbs-wrappers">
             <?php echo '<ul class="breadcrumbs">';
             echo '<li class="bread-list"><a href="' . home_url() . '">Home</a></li>';
             $parent_id = $archive_object->parent;
-            $breadcrumb = '<li class="bread-list">' . wp_strip_all_tags(single_cat_title('', false)) . '</li>';
+            $breadcrumb = '<li class="bread-list">' . $cat_name . '</li>';
             while ($parent_id > 0) {
                 $parent_cat = get_category($parent_id);
                 $breadcrumb = '<li class="bread-list"><a href="' . get_category_link($parent_id) . '" title="' . $parent_cat->name . '">' . $parent_cat->name . '</a></li>' . $breadcrumb;
@@ -31,7 +36,7 @@ $children = get_terms($archive_object->taxonomy, array('parent' => $cat_id, 'ord
             echo '</ul>'; ?>
         </div>
         <div class="category-page-title-wrapper">
-            <h2 class="category-page-title"><?php echo wp_strip_all_tags(single_cat_title('', false)); ?></h2>
+            <h2 class="category-page-title"><?php echo $cat_name; ?></h2>
         </div>
         <!-- <p class="text-[16px] md:text-[18px] text-[#091A27] pt-4 w-[95%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p> -->
         <?php echo (!empty($desc)) ? '<p class="text-[16px] md:text-[18px] text-[#091A27] pt-4 w-[95%]">' . $desc . '</p>' : ''; ?>
