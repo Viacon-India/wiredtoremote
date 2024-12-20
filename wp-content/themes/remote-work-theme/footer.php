@@ -85,7 +85,7 @@
             <div class="footer-copyright-sec">
                 <div class="container mx-auto ">
                     <div class="footer-copyright-sec-inner">
-                        <p class="copyright">© <?php echo date('Y'); ?>. All rights reserved.</p>
+                        <p class="copyright">© <?php echo date('Y'); ?> Wired To Remote. All rights reserved.</p>
                         <?php if (!empty($facebook) && (filter_var($facebook, FILTER_VALIDATE_URL) !== false) || (!empty($linkedin) && (filter_var($linkedin, FILTER_VALIDATE_URL) !== false))) :
                             echo '<div class="footer-icon-sec">';
                             if (!empty($facebook) && (filter_var($facebook, FILTER_VALIDATE_URL) !== false)) echo '<a class="footer-icon" href="' . $facebook . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="social_Link"><span class="icon-facebook"></span></a>';
