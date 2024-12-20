@@ -10,14 +10,16 @@ if (file_exists(get_template_directory() . '/required/custom-ajax.php')) {
 if (file_exists(get_template_directory() . '/required/custom-ajax-functions.php')) {
 	require_once(get_template_directory() . '/required/custom-ajax-functions.php');
 }
-
+if (file_exists(get_template_directory() . '/required/resume-builder-functions.php')) {
+	require_once(get_template_directory() . '/required/resume-builder-functions.php');
+}
 
 
 //---------------------------------------------Enqueue Script and Style
 add_action('wp_enqueue_scripts', 'my_plugin_assets');
 function my_plugin_assets()
 {
-	$ver = '1.3.7';
+	$ver = '1.3.8';
 	wp_enqueue_script('jquery.min', get_template_directory_uri() . '/js/jquery-3.7.1.min.js', array('jquery'), $ver, true);
 	wp_enqueue_script('owl.carousel.min', get_template_directory_uri() . '/js/owl.carousel.min.js', array('jquery'), $ver, true);
 	wp_enqueue_script('custom-script', get_template_directory_uri() . '/js/ThemeScript.js', array('jquery'), $ver, true);
@@ -248,58 +250,18 @@ function custom_opengraph_url($url) {
 	}
 }
 
-
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-
-add_action('wp_ajax_tech_contact_process', 'ajax_tech_contact_process');
-add_action('wp_ajax_nopriv_tech_contact_process', 'ajax_tech_contact_process');
-function ajax_tech_contact_process() {
-    $response_arr = ['flag' => FALSE, 'msg' => NULL];
-    
-    $user_name = $_POST['u_name'];
-    $user_email = $_POST['u_email'];
-    $subject = $_POST['u_subject'];
-    $u_mnessage = $_POST['u_message'];
-    
-    if(empty($user_name)) {
-        $response_arr['msg'] = 'Enter your name.';
-    } elseif(empty($user_email)) {
-        $response_arr['msg'] = 'Enter your email address.';
-    } elseif(empty($subject)) {
-        $response_arr['msg'] = 'Enter subject.';
-    } elseif(empty($u_mnessage)) {
-        $response_arr['msg'] = 'Enter your message.';
-    } else {
-
-		echo "Submited";
-        
-        // $to = 'mashum.webmaster@gmail.com';
-        // $to = 'viacon.sharmita@gmail.com';
-        // $body = '<table class="mail-table" style="border: 1px solid #0a9e01; padding:20px; width: 100%;">
-        //             <h4 style="border-bottom: 2px solid #ccc; padding-bottom: 10px; width: 50%;">This e-mail was sent from a contact form on Techtrendspro.</h4>
-        //             <tr>
-        //                 <td>Name: ' .$user_name .'</td>
-        //             </tr>
-        //             <tr>
-        //                 <td>Email: '. $user_email .'</td>
-        //             </tr>
-        //             <tr>
-        //                 <td>Subject: ' . $subject. '</td>
-        //             </tr>
-        //             <tr>
-        //                 <td>Message: ' . $u_mnessage .'</td>
-        //             </tr>
-        //         </table>';
-        // $headers = array('Content-Type: text/html; charset=UTF-8', 'Reply-To: ' .$user_name .' <' . $user_email. '>');
-        // wp_mail( $to, 'Tech Trends Pro Conatct Form' , $body, $headers );
-        
-        $response_arr['msg'] = 'Thank you for your message. It has been sent.';
-        $response_arr['flag'] = true;
+/*
+ * Set post views count using post meta//functions.php
+ */
+function customSetPostViews($postID) {
+    $countKey = 'post_views_count';
+    $count = get_post_meta($postID, $countKey, true);
+    if($count==''){
+        $count = 0;
+        delete_post_meta($postID, $countKey);
+        add_post_meta($postID, $countKey, '1');
+    }else{
+        $count++;
+        update_post_meta($postID, $countKey, $count);
     }
-    
-    
-    echo json_encode($response_arr);
-    exit;
 }

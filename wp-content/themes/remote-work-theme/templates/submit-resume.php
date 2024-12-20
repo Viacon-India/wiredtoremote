@@ -24,7 +24,7 @@ get_header();
                     <?php if ( has_post_thumbnail()) :
                         echo get_the_post_thumbnail( $post_id, 'full');
                     else :
-                        echo '<img src="'.get_template_directory_uri().'/images/contact-image.svg" alt="contact us image" />';
+                        echo '<img src="'.get_template_directory_uri().'/images/submit-resume.png" alt="Resume Upload image" />';
                     endif; ?>
                 </figure>
             </div>

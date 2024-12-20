@@ -4,7 +4,6 @@
     $post_id = get_queried_object_id();
     $cat = get_the_category();
     $cat_id = (!empty($cat)) ? $cat[0]->term_id : '';
-    $tags = get_the_tags();
     $author_id = get_the_author_meta('ID');
     $author_name = get_the_author_meta('display_name', $author_id);
     $author_URL = get_author_posts_url($author_id);
@@ -18,7 +17,8 @@
         'posts_per_page'    => 3,
         'post__not_in'      => array($post_id)
     ));
-    $fast_facts = get_post_meta($post_id, "fast-facts", true); ?>
+    $fast_facts = get_post_meta($post_id, "fast-facts", true);
+    customSetPostViews($post_id); ?>
 
     <section class="single-page">
         <div class="single-banner">
@@ -109,16 +109,7 @@
                             endif; ?>
                             <?php the_content(); ?>
 
-                            <?php if ($tags) { ?>
-                                <div class="single-page-tag-sec">
-                                    <h3 class="single-page-tag-title">Tags:</h3>
-                                    <div class="single-tags-wrapper">
-                                        <?php foreach ($tags as $tag) { ?>
-                                            <a href="<?php echo get_tag_link($tag->term_id); ?>" class="single-tags-btn" rel="tags"><?php echo $tag->name; ?></a>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
+                            
 
                             <div class="share-this-article-single">
                                 <h3 class="single-share-this-article-title">Share This Article:</h3>
