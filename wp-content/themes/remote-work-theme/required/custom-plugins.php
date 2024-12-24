@@ -53,7 +53,7 @@ function theme_settings() {
 		register_setting('theme_menu',$social, 'esc_attr');
 	}
 
-	$categories = array('category_1','category_2','category_3','category_4','category_5');
+	$categories = array('category_1','category_2','category_3','category_4');
 	foreach($categories as $category){
 		add_settings_field($category, ucwords(str_replace('_',' ',$category)), 'category_callback', 'theme_menu', 'categories',$category);
 		register_setting('theme_menu',$category, 'esc_attr');
@@ -170,29 +170,29 @@ if(!function_exists('category_svg'))
 
 
 //-------------------------------------------------------------------Idea Taxonomy
-add_action('init', function() {
-	register_taxonomy('idea', 'post', array('label'				=> __('Ideas'),
-												'hierarchical'		=> true,
-												'rewrite'			=> array('slug'			=> 'idea',
-																			'with_front'	=> false,
-																			'hierarchical'	=> true	),
-												'show_admin_column'	=> true,
-												'show_in_rest'		=> true,
-												'labels'			=> array('singular_name'				=> __('Idea'),
-																			'all_items'						=> __('All Ideas'),
-																			'parent_item_colon'				=> __('Parent Idea'),
-																			'edit_item'						=> __('Edit Idea'),
-																			'view_item'						=> __('View Idea'),
-																			'update_item'					=> __('Update Idea'),
-																			'add_new_item'					=> __('Add New Idea'),
-																			'new_item_name'					=> __('New Idea Name'),
-																			'search_items'					=> __('Search Ideas'),
-																			'popular_items'					=> __('Popular Ideas'),
-																			'separate_items_with_commas'	=> __('Separate Ideas with comma'),
-																			'choose_from_most_used'			=> __('Choose from most used Ideas'),
-																			'not_found'						=> __('No Ideas found'))));
-});
-register_taxonomy_for_object_type('idea', 'post');
+// add_action('init', function() {
+// 	register_taxonomy('idea', 'post', array('label'				=> __('Ideas'),
+// 												'hierarchical'		=> true,
+// 												'rewrite'			=> array('slug'			=> 'idea',
+// 																			'with_front'	=> false,
+// 																			'hierarchical'	=> true	),
+// 												'show_admin_column'	=> true,
+// 												'show_in_rest'		=> true,
+// 												'labels'			=> array('singular_name'				=> __('Idea'),
+// 																			'all_items'						=> __('All Ideas'),
+// 																			'parent_item_colon'				=> __('Parent Idea'),
+// 																			'edit_item'						=> __('Edit Idea'),
+// 																			'view_item'						=> __('View Idea'),
+// 																			'update_item'					=> __('Update Idea'),
+// 																			'add_new_item'					=> __('Add New Idea'),
+// 																			'new_item_name'					=> __('New Idea Name'),
+// 																			'search_items'					=> __('Search Ideas'),
+// 																			'popular_items'					=> __('Popular Ideas'),
+// 																			'separate_items_with_commas'	=> __('Separate Ideas with comma'),
+// 																			'choose_from_most_used'			=> __('Choose from most used Ideas'),
+// 																			'not_found'						=> __('No Ideas found'))));
+// });
+// register_taxonomy_for_object_type('idea', 'post');
 
 
 
