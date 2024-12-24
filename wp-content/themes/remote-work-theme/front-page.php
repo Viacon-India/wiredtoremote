@@ -4,11 +4,6 @@ $cat1_slug = get_option('category_1');
 $cat2_slug = get_option('category_2');
 $cat3_slug = get_option('category_3');
 $cat4_slug = get_option('category_4');
-// $cat5_slug = get_option('category_5');
-
-$start_article = get_option('start_article_id');
-$grow_article = get_option('grow_article_id');
-$exit_article = get_option('exit_article_id');
 
 $cat1_posts = new WP_Query(array(
     'post_type'        => 'post',
@@ -42,21 +37,6 @@ $cat4_posts = new WP_Query(array(
     'order'             => 'DESC',
     'posts_per_page'    => 6
 ));
-// $cat5_posts = new WP_Query(array(
-//     'post_type'        => 'post',
-//     'category_name'     => $cat5_slug,
-//     'post_status'       => 'publish',
-//     'orderby'           => 'date',
-//     'order'             => 'DESC',
-//     'posts_per_page'    => 6
-// ));
-$taxonomies = get_terms(array(
-    'taxonomy'    => 'idea',
-    'orderby'       => 'count',
-    'order'         => 'DESC',
-    'hide_empty'    => false,
-    'number'        => 10
-));
 ?>
 
 
@@ -89,11 +69,6 @@ $taxonomies = get_terms(array(
 
 
 <?php
-// print_r($cat1_posts->posts);
-// echo '<br>';
-// // echo $cat1_posts->posts->post_title;
-// // print_r($cat1_posts->posts);
-// echo '<br>';
 if ($cat1_posts->have_posts()) :
     $cat1 = get_category_by_slug($cat1_slug); ?>
     <section class="home-idea-sec">
@@ -236,28 +211,5 @@ if ($cat1_posts->have_posts()) :
         </div>
     </section>
 <?php endif; ?>
-
-
-
-<?php /* if ($cat5_posts->have_posts()) :
-    $cat5 = get_category_by_slug($cat5_slug); ?>
-    <section class="home-blog-sec">
-        <div class="container mx-auto">
-            <h2 class="home-blog-sec-title"><?php echo $cat5->name; ?></h2>
-            <div class="home-blog-grid-wrapper">
-                <?php while ($cat5_posts->have_posts()) : $cat5_posts->the_post();
-                    get_template_part('template-parts/listing', 'card');
-                endwhile; ?>
-            </div>
-            <!-- need to work this section -->
-            <div class="home-blog-sec-cta-wrapper">
-                <a href="<?php echo get_category_link($cat5->term_id); ?>" class="common-btn">
-                    Explore More <span class="icon-arrow"></span>
-                </a>
-            </div>
-        </div>
-    </section>
-<?php endif; */ ?>
-
 
 <?php get_footer(); ?>
