@@ -109,7 +109,7 @@ $get_title = $_GET['title'] ?? '';
                         <p class="job-organization">'.$ldata->benefits.' <span>'.$ldata->postDate.'</span></p>
                         <h3 class="job-title">'.$job_title.'</h3>
                         <ul class="job-type">
-                            <li>'.$ldata->type.'</li>
+                            ' . ($type ? '<li>'.$type.'</li>.' : '') . '
                         </ul>
                         <div class="flex justify-between pt-[10px]">
                             <div>

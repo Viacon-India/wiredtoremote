@@ -10,6 +10,12 @@ if (!function_exists('SearchFilter')) {
     }
 }
 
+add_filter('the_content', 'remove_empty_p', 20, 1);
+function remove_empty_p($content){
+    $content = force_balance_tags($content);
+    return preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
+}
+
 
 //Check and Call Logo
 if (!function_exists('logo_url')) {
