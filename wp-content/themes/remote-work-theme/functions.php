@@ -25,7 +25,7 @@ if (file_exists(get_template_directory() . '/required/resume-builder-functions.p
 add_action('wp_enqueue_scripts', 'my_plugin_assets');
 function my_plugin_assets()
 {
-	$ver = '1.3.9';
+	$ver = '1.4.0';
 
 	if(is_page('test')) {
 		wp_enqueue_script('3', 'https://code.jquery.com/jquery-3.6.0.min.js', array('jquery.min'), $ver, true);
