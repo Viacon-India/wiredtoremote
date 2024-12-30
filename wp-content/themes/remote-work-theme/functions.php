@@ -25,7 +25,15 @@ if (file_exists(get_template_directory() . '/required/resume-builder-functions.p
 add_action('wp_enqueue_scripts', 'my_plugin_assets');
 function my_plugin_assets()
 {
-	$ver = '1.3.8';
+	$ver = '1.3.9';
+
+	if(is_page('test')) {
+		wp_enqueue_script('3', 'https://code.jquery.com/jquery-3.6.0.min.js', array('jquery.min'), $ver, true);
+		wp_enqueue_script('1', 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', array('jquery'), $ver, true);
+		wp_enqueue_script('2', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js', array('jquery'), $ver, true);
+
+	} 
+
 	wp_enqueue_script('jquery.min', get_template_directory_uri() . '/js/jquery-3.7.1.min.js', array('jquery'), $ver, true);
 	wp_enqueue_script('owl.carousel.min', get_template_directory_uri() . '/js/owl.carousel.min.js', array('jquery'), $ver, true);
 	wp_enqueue_script('custom-script', get_template_directory_uri() . '/js/ThemeScript.js', array('jquery'), $ver, true);
@@ -33,17 +41,15 @@ function my_plugin_assets()
 
 	wp_enqueue_style('owl.carousel.min', get_template_directory_uri() . '/css/owl.carousel.min.css', $ver, 'all');
 	wp_enqueue_style('swiper-bundle.css.min', get_template_directory_uri() . '/css/swiper-bundle.min.css', $ver, 'all');
-	wp_enqueue_style('style', get_stylesheet_uri(), false, '', 'all');
+	wp_enqueue_style('style', get_stylesheet_uri(), $ver, 'all');
 
 	$jsData = [
-        'ajaxurl' => admin_url('admin-ajax.php'),
-        'test' => '123',
-        'test1' => 'world',
-        ];
+		'ajaxurl' => admin_url('admin-ajax.php'),
+		'test' => '123',
+		'test1' => 'world',
+		];
 
-    wp_localize_script('custom-script', 'Front', $jsData);
-
-
+	wp_localize_script('custom-script', 'Front', $jsData);
 	
 }
 
