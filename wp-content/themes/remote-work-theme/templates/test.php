@@ -45,7 +45,7 @@
                             <p>Senior Developer</p>
                         </div>  
                         <div class="result-box">
-                            <p><b>Viacon</b><span>Aug 2019 - 2022</span></p>
+                            <p><b>XYZ</b><span>Aug 2019 - 2022</span></p>
                             <p>Lead Developer</p>
                         </div> 
                     </div>
