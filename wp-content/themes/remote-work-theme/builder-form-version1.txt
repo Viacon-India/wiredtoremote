@@ -7,63 +7,6 @@ get_header();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> -->
 
-<style>
-    .design-1 {
-       background: #0000ff1f;
-    }
-    .design-2 {
-       background: #2eff001c;
-    }
-    .design-3 {
-       background: #ff003b17;
-    }
-
-    .wrapper {
-        padding: 2rem;
-        /* line-height: 2rem; */
-    }
-    .personal-deatails p {
-        font-size: 20px;
-    }
-    .generated-resume h2 {   
-        font-size: 42px;
-        color: green;
-        font-weight: 700;
-    }
-    .generated-resume .designation {
-        border-bottom: 1px solid #ccc;
-    }
-    .result-box { margin-bottom: 1rem; }
-    .result-box span {
-        float: right;
-        font-size: 14px;
-    }
-    .generated-resume h3 {
-        font-size: 22px;
-        text-transform: uppercase;
-        font-weight: 900;
-        border-bottom: 1px solid #000;
-        margin: 1.4rem 0;
-    }
-    .generated-resume p {
-        font-size: 18px;
-        line-height: 1.62rem;
-    }
-
-    .form-section {
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-        padding: 15px;
-        border-radius: 5px;
-    }
-    .form-section h4 {
-        margin-top: 0;
-    }
-    .add-btn, .remove-btn {
-        margin-top: 10px;
-    }
-</style>
-
 <section class="contact-us-page">
     <div class="container mx-auto">
 
@@ -76,21 +19,12 @@ get_header();
         <div class="contact-us-page-inner">
             <div class="contact-us-content-sec">
                 <h2 class="contact-us-page-underline-title"><?php echo strip_tags(get_the_title()); ?></h2>
-                <div class="contact-us-page-dsc-wrapper">                    
+                <div class="contact-us-page-dsc-wrapper">
+                    
                 
 
                     <form class="contact-us-from" method="post" id="tech_contact_form">
                         <input type="hidden" name="action" value="tech_contact_process" />
-
-                        <h3><strong>Select One Design to view the result</strong></h3>
-
-                        <input type="radio" id="design-1" name="template_design" value="design-1" selected>
-                        <label for="design-1">Design 1</label><br>
-                        <input type="radio" id="design-2" name="template_design" value="design-2">
-                        <label for="design-2">Design 2</label><br>
-                        <input type="radio" id="design-3" name="template_design" value="design-3">
-                        <label for="design-3">Design 3</label>
-
                         <div class="contact-f-s-name-email-wrapper">
                             <div class="contact-from-common-mb-for-email-name-sec">
                                 <input type="text" id="name" name="name" class="contact-from-common-input" placeholder="Enter your Name" />
@@ -147,8 +81,24 @@ get_header();
                             </div>
                             <button type="button" class="add-btn contact-from-common-mb" onclick="addSection('experience')">Experience +</button>
                         </div>
-                        
+
+                        <h3><strong>Select One Design to view the result</strong></h3>
+
+                        <input type="radio" id="design-1" name="template_design" value="design-1">
+                        <label for="design-1">Design 1</label><br>
+                        <input type="radio" id="design-2" name="template_design" value="design-2">
+                        <label for="design-2">Design 2</label><br>
+                        <input type="radio" id="design-3" name="template_design" value="design-3">
+                        <label for="design-3">Design 3</label>
+
+                        <!-- <div class="contact-from-contact-button-wrapper">
+                            <button type="submit" class="contact-from-contact-button">
+                                get in touch <span class="icon-arrow"></span>
+                            </button>
+                        </div> -->
                     </form>
+
+                    <button id="download-pdf">Download as PDF</button>
 
                     <div class="error-msg"></div>
                     <div class="success-ms"></div>
@@ -157,7 +107,16 @@ get_header();
             </div>
         </div>
 
+
     </div>
+
+    <div id="content">
+        <h3>Hello, this is a H3 tag</h3>
+
+        <p>a pararaph</p>
+    </div>
+    <div id="editor"></div>
+    <button id="cmd">generate PDF</button>
     
 
     <div id="capture">
@@ -206,8 +165,152 @@ get_header();
 
         </div>
     </div>
-
 </section>
+
+<style>
+    .design-1 {
+       background: #0000ff1f;
+    }
+    .design-2 {
+       background: #2eff001c;
+    }
+    .design-3 {
+       background: #ff003b17;
+    }
+
+    .wrapper {
+        padding: 2rem;
+        line-height: 2rem;
+    }
+    .generated-resume h2 {   
+        font-size: 23px;
+        color: green;
+        font-weight: 700;
+    }
+    .generated-resume .designation {
+        border-bottom: 1px solid #ccc;
+    }
+    .result-box { margin-bottom: 1rem; }
+    .result-box span {
+        float: right;
+    }
+    h3 {
+        font-size: 22px;
+        text-transform: uppercase;
+        font-weight: 900;
+        border-bottom: 1px solid #000;
+        margin: 1.4rem 0;
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .form-section h4 {
+        margin-top: 0;
+    }
+    .add-btn, .remove-btn {
+        margin-top: 10px;
+    }
+</style>
+
+
+<script>
+    jQuery(document).ready(function ($) {
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+
+        $('#cmd').click(function () {
+            doc.fromHTML($('#content').html(), 15, 15, {
+                'width': 170,
+                    'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample-file.pdf');
+        });
+    });
+
+    function addSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        const clone = section.cloneNode(true);
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remove';
+        removeBtn.className = 'remove-btn';
+        removeBtn.onclick = function() {
+            clone.remove();
+        };
+        clone.appendChild(removeBtn);
+        section.parentNode.appendChild(clone);
+    }
+</script>
+
+<script>
+
+            jQuery(document).ready(function ($) {
+            
+                console.log('remote!');
+                /*jQuery(document).ready(function($) {
+                    $('meta[property=og:image]').attr("content", 'sharmita');
+                    console.log('ok');
+                });*/
+
+                $(document).on('change','#tech_contact_form', function (e) {
+                    e.preventDefault();
+                    var _data = $(this).serialize();
+                    if(!$('#tech_contact_form input[name="name"]').val()) {
+                        alert("Enter name to proceed!!");
+                    } 
+                    else if(!$('#tech_contact_form input[name="email"]').val()) {
+                        alert("Enter your email address to proceed!!");
+                    } 
+                    else {
+
+                        console.log(_data);
+
+                        $.post(Front.ajaxurl, _data, function (resp) {
+                            if(resp.flag == true) {
+                                $('.success-msg').show();
+                                $('.success-msg').append('<span class="smessage" style="color: green;">' + resp.msg + '</span>');
+                                // $('#tech_contact_form').trigger("reset");
+
+                                console.log(resp.data);
+                                $('.generated-resume').html(`
+                                <div class="wrapper `+resp.data.template_design+`">
+                                    <div class="personal-deatails">
+                                        <h2>`+resp.data.name+`</h2>
+                                        <p>`+resp.data.email+`</p>
+                                    </div>
+                                    <div class="personal-deatails">
+                                        <h3>`+resp.data.description+`</h3>
+                                        <p>Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño. El punto de usar Lorem Ipsum es que tiene una distribución más o menos normal de las letras, al contrario de usar textos como por ejemplo "Contenido aquí, contenido aquí". Estos textos hacen parecerlo un español que se puede leer. Muchos paquetes de autoedición y editores de páginas web usan el Lorem Ipsum como su texto por defecto, y al hacer una búsqueda de "Lorem Ipsum" va a dar por resultado muchos sitios web que usan este texto si se encuentran en estado de desarrollo.</p>
+                                    </div>
+                                </div>
+                                `);
+                            } else {
+                                $('.error-msg').show();
+                                $('.error-msg').append('<span class="emessage" style="color: red;">' + resp.msg + '</span>');
+                                setTimeout(function() {
+                                $('span.emessage').remove();
+                                $('.error-msg').hide();
+                                }, 6000);
+                            }
+                        }, 'json');
+
+                    }
+
+                });
+
+            });   
+        </script>
+
+
+
 
 
 <?php
