@@ -2465,6 +2465,9 @@ transition: max-height 0.2s ease-out;
 .job-card{
   @apply bg-[#EAF2F8] p-5 rounded-[6px]
 }
+.job-card:nth-child(25){
+  @apply hidden
+}
 .job-organization{
   @apply pt-5 text-[16px] text-[#000000] leading-[1.5] font-Supreme
 }

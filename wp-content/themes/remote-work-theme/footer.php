@@ -9,7 +9,7 @@
                     <div class="footer-main">
                         <div class="footer-logo-sec f-common-pt">
                             <a href="<?php echo home_url(); ?>">
-                                <figure class="rounded-none m-0 w-[208px] h-[49px] mb-[22px]">
+                                <figure class="rounded-none m-0 w-[270px] h-[38px] mb-[22px]">
                                     <?php if (function_exists('footer_logo_url')) {
                                         if (is_file(realpath($_SERVER["DOCUMENT_ROOT"]) . parse_url(footer_logo_url())['path'])) {
                                             echo '<img class="w-full h-full object-cover" src="' . footer_logo_url() . '" alt="logo" />';
