@@ -46,9 +46,9 @@ $cat4_posts = new WP_Query(array(
             <div class="banner-info">
                 <div class="hero-banner-subtitle-wrapper">
                     <h2 class="hero-banner-title">
-                    Quit
+                        Quit
                         <span class="font-bold">
-                        CUBICLES
+                            CUBICLES
                         </span>
                         . Work From
                         <span class="txt-rotate font-bold" data-period="2000" data-rotate='["Cafes", "Hotels", "Anywhere"]'></span>.
@@ -57,13 +57,17 @@ $cat4_posts = new WP_Query(array(
                 </div>
                 <p class="hero-banner-subtitle line-clamp-3">
                     A leading platform for digital nomads, remote working enthusiasts, and active job seekers. Make the change, switch To remote.
-                    <?php //echo wp_strip_all_tags(get_page_by_path('about-us')->post_content); ?>
+                    <?php //echo wp_strip_all_tags(get_page_by_path('about-us')->post_content); 
+                    ?>
                 </p>
                 <a href="<?php echo home_url('/about-us'); ?>" class="common-btn">About us <span class="icon-arrow"></span></a>
             </div>
             <div class="banner-image-sec">
                 <figure class="banner-image-sec-wrapper">
-                    <img class="img-responsive" src="<?php echo get_template_directory_uri(); ?>/images/home-hero.svg" alt="hero-banner-img">
+                    <video class="img-responsive" autoplay loop muted playsinline>
+                        <source src="<?php echo get_template_directory_uri(); ?>/images/Remote_GIF.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </figure>
             </div>
         </div>
@@ -139,8 +143,8 @@ if ($cat1_posts->have_posts()) :
                 <h2 class="text-[#091A27] text-[32px] sm:text-[50px] md:text-[54px] leading-[1] font-bold">An Optimized Resume No Employer Can Turn Down</h2>
                 <p class="text-[18px] text-[#091A27] italic pt-4 md:pt-6 lg:pt-10 w-full lg:w-[60%]">Your resume could be the reason why the Best Remote Employers are not Contacting You. Get your Current resume Fixed, Or Allow Us to Build One From the Scratch.</p>
                 <div class="home-idea-sec-common-btn-wrapper !justify-start">
-                <a href="<?php echo home_url('submit-resume'); ?>" class="common-btn">
-                        Submit Resume  <span class="icon-arrow"></span>
+                    <a href="<?php echo home_url('submit-resume'); ?>" class="common-btn">
+                        Submit Resume <span class="icon-arrow"></span>
                     </a>
                 </div>
                 <figure class="w-full h-fit pt-10">
@@ -149,7 +153,10 @@ if ($cat1_posts->have_posts()) :
             </div>
             <div class="w-full lg:w-[50%]">
                 <figure class="w-full h-fit">
-                    <img class="w-full h-full object-contain" src="<?php echo get_template_directory_uri(); ?>/images/line-art2.svg" alt="lineArt2">
+                    <video class="w-full h-full object-contain" autoplay loop muted playsinline>
+                        <source src="<?php echo get_template_directory_uri(); ?>/images/Resume_Job_GIF.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </figure>
             </div>
         </div>
