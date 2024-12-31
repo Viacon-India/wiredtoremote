@@ -36,7 +36,7 @@ $cat_name = wp_strip_all_tags(single_cat_title('', false)); ?>
             echo '</ul>'; ?>
         </div>
         <div class="category-page-title-wrapper">
-            <h2 class="category-page-title"><?php echo $cat_name; ?></h2>
+            <h1 class="category-page-title"><?php echo $cat_name; ?></h1>
         </div>
         <!-- <p class="text-[16px] md:text-[18px] text-[#091A27] pt-4 w-[95%]">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p> -->
         <?php echo (!empty($desc)) ? '<p class="text-[16px] md:text-[18px] text-[#091A27] pt-4 w-[95%]">' . $desc . '</p>' : ''; ?>

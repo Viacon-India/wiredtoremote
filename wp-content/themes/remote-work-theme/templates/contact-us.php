@@ -15,7 +15,7 @@ while (have_posts()) : the_post();
             </div>
             <div class="contact-us-page-inner">
                 <div class="contact-us-content-sec">
-                    <h2 class="contact-us-page-underline-title"><?php echo strip_tags(get_the_title()); ?></h2>
+                    <h1 class="contact-us-page-underline-title"><?php echo strip_tags(get_the_title()); ?></h1>
                     <div class="contact-us-page-dsc-wrapper">
                         <?php the_content(); ?>
                     </div>

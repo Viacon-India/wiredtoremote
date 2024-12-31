@@ -156,8 +156,8 @@ function custom_comment_form_defaults($defaults)
 {
 	$defaults['class_form']				= 'comment-from';
 	$defaults['title_reply']			= 'Leave A Comment';
-	$defaults['title_reply_before']		= '<h2 class="comment-from-title">';
-	$defaults['title_reply_after']		= '</h2>';
+	$defaults['title_reply_before']		= '<h3 class="comment-from-title">';
+	$defaults['title_reply_after']		= '</h3>';
 	$defaults['submit_button']			= '<button type="submit" class="comment-from-comment-button">Post Comment<span class="icon-arrow"></span></button>';
 	$defaults['submit_field']			= '<div class="comment-from-comment-button-wrapper">%1$s %2$s</div>';
 

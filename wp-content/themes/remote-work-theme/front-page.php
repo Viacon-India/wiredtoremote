@@ -45,7 +45,7 @@ $cat4_posts = new WP_Query(array(
         <div class="hero-banner-inner">
             <div class="banner-info">
                 <div class="hero-banner-subtitle-wrapper">
-                    <h2 class="hero-banner-title">
+                    <h1 class="hero-banner-title">
                         Quit
                         <span class="font-bold">
                             CUBICLES
@@ -53,7 +53,7 @@ $cat4_posts = new WP_Query(array(
                         . Work From
                         <span class="txt-rotate font-bold" data-period="2000" data-rotate='["Cafes", "Hotels", "Anywhere"]'></span>.
                         <br>Inspire Change
-                    </h2>
+                    </h1>
                 </div>
                 <p class="hero-banner-subtitle line-clamp-3">
                     A leading platform for digital nomads, remote working enthusiasts, and active job seekers. Make the change, switch To remote.

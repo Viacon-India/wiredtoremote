@@ -29,7 +29,7 @@
                                 $useful_menu = get_term(get_nav_menu_locations()['company-menu'], 'nav_menu');
                                 $useful_menu_items = wp_get_nav_menu_items($useful_menu->term_id);
                                 $menu_items_with_children = array();
-                                echo '<h1 class="footer-c-title mb-[1.5rem] md:mb-9">' . $useful_menu->name . '</h1>';
+                                echo '<h2 class="footer-c-title mb-[1.5rem] md:mb-9">' . $useful_menu->name . '</h2>';
                                 echo '<ul>';
                                 foreach ($useful_menu_items as $menu_item) {
                                     if ($menu_item->menu_item_parent && !in_array($menu_item->menu_item_parent, $menu_items_with_children)) {
@@ -50,7 +50,7 @@
                                 $footer_menu = get_term(get_nav_menu_locations()['categories-menu'], 'nav_menu');
                                 $footer_menu_items = wp_get_nav_menu_items($footer_menu->term_id);
                                 $menu_items_with_children = array();
-                                echo '<h1 class="footer-c-title mb-[1.5rem] md:mb-9">' . $footer_menu->name . '</h1>';
+                                echo '<h2 class="footer-c-title mb-[1.5rem] md:mb-9">' . $footer_menu->name . '</h2>';
                                 echo '<ul>';
                                 foreach ($footer_menu_items as $menu_item) {
                                     if ($menu_item->menu_item_parent && !in_array($menu_item->menu_item_parent, $menu_items_with_children)) {
@@ -67,7 +67,7 @@
                                 echo '</div>';
                             endif; ?>
                             <div class="footer-get-in-touch-card ]">
-                                <h1 class="footer-c-title mb-[1.5rem] md:mb-9">Get in Touch</h1>
+                                <h2 class="footer-c-title mb-[1.5rem] md:mb-9">Get in Touch</h2>
                                 <?php if (!empty($subscription_text)) echo '<div class="footer-desc-wrapper"><p class="footer-desc">' . $subscription_text . '</p></div>'; ?>
                                 <?php if (shortcode_exists('email-subscribers-form')) :
                                     echo do_shortcode('[email-subscribers-form id="1"]');
