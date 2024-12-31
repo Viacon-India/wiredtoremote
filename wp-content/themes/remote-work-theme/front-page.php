@@ -1,4 +1,6 @@
-<?php get_header();
+<?php /* Template Name: Front Page Template */
+
+get_header();
 
 $cat1_slug = get_option('category_1');
 $cat2_slug = get_option('category_2');
