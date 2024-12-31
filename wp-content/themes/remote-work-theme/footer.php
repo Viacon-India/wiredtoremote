@@ -24,9 +24,9 @@
                             <?php if (!empty($footer_text)) echo '<p class="footer-desc">' . $footer_text . '</p>'; ?>
                         </div>
                         <div class="footer-detail">
-                            <?php if (isset(get_nav_menu_locations()['useful-menu'])) :
+                            <?php if (isset(get_nav_menu_locations()['company-menu'])) :
                                 echo '<div class="footer-detail-small-sec">';
-                                $useful_menu = get_term(get_nav_menu_locations()['useful-menu'], 'nav_menu');
+                                $useful_menu = get_term(get_nav_menu_locations()['company-menu'], 'nav_menu');
                                 $useful_menu_items = wp_get_nav_menu_items($useful_menu->term_id);
                                 $menu_items_with_children = array();
                                 echo '<h1 class="footer-c-title mb-[1.5rem] md:mb-9">' . $useful_menu->name . '</h1>';
@@ -45,9 +45,9 @@
                                 echo '</ul>';
                                 echo '</div>';
                             endif; ?>
-                            <?php if (isset(get_nav_menu_locations()['footer-menu'])) :
+                            <?php if (isset(get_nav_menu_locations()['categories-menu'])) :
                                 echo '<div class="footer-detail-small-sec">';
-                                $footer_menu = get_term(get_nav_menu_locations()['footer-menu'], 'nav_menu');
+                                $footer_menu = get_term(get_nav_menu_locations()['categories-menu'], 'nav_menu');
                                 $footer_menu_items = wp_get_nav_menu_items($footer_menu->term_id);
                                 $menu_items_with_children = array();
                                 echo '<h1 class="footer-c-title mb-[1.5rem] md:mb-9">' . $footer_menu->name . '</h1>';

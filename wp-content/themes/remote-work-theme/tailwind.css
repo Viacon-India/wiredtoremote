@@ -904,7 +904,7 @@ transition: max-height 0.2s ease-out;
 }
 
 .banner-image-sec-wrapper{
-  @apply relative lg:w-[300px] xl:w-[372px] 2xl:w-[444px] 3xl:w-[516px]
+  @apply relative lg:w-[300px] xl:w-[372px] 2xl:w-[516px]
 }
 
 
