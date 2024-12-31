@@ -45,7 +45,7 @@ $exclude = (!empty($post)) ? array($post->ID) : '';
             </div>
         <?php endif; ?>
         <div class="aside-common-bg-wrapper">
-            <h3 class="text-[#091A27] text-[18px] font-semibold mb-[10px]">An Optimized Resume No Employer Can Turn Down</h3>
+            <h2 class="text-[#091A27] text-[18px] font-semibold mb-[10px]">An Optimized Resume No Employer Can Turn Down</h2>
             <p class="text-[16px] text-[#091A27CC]">Your resume could be the reason why the Best Remote Employers are not Contacting You. Get your Current resume Fixed, Or Allow Us to Build One From the Scratch.</p>
             <p></p>
             <a href="<?php echo home_url('submit-resume'); ?>">

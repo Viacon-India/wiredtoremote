@@ -9,6 +9,6 @@
         <?php endif; ?>
     </figure>
     <div class="side-card-content">
-        <h4 class="side-card-content-title"><?php echo the_title_attribute('echo=0'); ?></h4>
+        <h3 class="side-card-content-title"><?php echo the_title_attribute('echo=0'); ?></h3>
     </div>
 </a>

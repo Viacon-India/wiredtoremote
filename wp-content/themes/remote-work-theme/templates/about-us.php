@@ -1,3 +1,5 @@
+<?php /* Template Name: About Page Template */ ?>
+
 <?php get_header();
 
 while (have_posts()) : the_post();
@@ -18,9 +20,13 @@ while (have_posts()) : the_post();
                 </span>
                 <?php the_content(); ?>
             </div>
+
+            <figure class="about-us-bottom-img-wrapper">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/About-Us-05.svg" alt="about-mg">
+            </figure>
             
             <?php /*if ( has_post_thumbnail()) :
-                echo '<figure class="about-us-bottom-img-wrapper">';
+                echo '';
                     echo get_the_post_thumbnail( $post_id, 'full', array( 'class' => 'img-responsive' ) );
                 echo '</figure>';
             else :

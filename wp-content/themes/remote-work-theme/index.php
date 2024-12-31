@@ -17,7 +17,7 @@ $post_per_page = get_option('posts_per_page'); ?>
         </div>
         <div class="search-page-title-wrapper">
             <div class="category-page-title-wrapper">
-                <h2 class="category-page-title">Blog</h2>
+                <h1 class="category-page-title">Blog</h1>
             </div>
         </div>
         <?php if(have_posts()) :

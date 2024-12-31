@@ -32,7 +32,7 @@ $instagram = get_the_author_meta('instagram', $author_id); ?>
                 </figure>
 
                 <div class="flex sm:hidden h-fit">
-                    <h2 class="author-page-author-card-title "><?php echo $display_name; ?></h2>
+                    <h1 class="author-page-author-card-title "><?php echo $display_name; ?></h1>
                 </div>
             </div>
             <div class="author-page-author-card-content-sec">
