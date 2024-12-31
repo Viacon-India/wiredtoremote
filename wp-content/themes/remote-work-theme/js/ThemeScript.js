@@ -302,4 +302,17 @@ $(document).ready(function(){
     filename = filename.split(".").slice(0, -1).join(".");
     el.setAttribute("alt", filename);
   }
+
+  //External link open in new tab
+  $('a').each(function () {
+    var a = new RegExp('/' + window.location.host + '/');
+    if (this.href && !a.test(this.href)) {
+        $(this).click(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            window.open(this.href, '_blank');
+        });
+    }
+  });
+
 });
