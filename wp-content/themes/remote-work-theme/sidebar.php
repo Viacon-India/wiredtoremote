@@ -19,7 +19,7 @@ $exclude = (!empty($post)) ? array($post->ID) : '';
                 if ($child_posts->have_posts()) : ?>
                     <div class="aside-common-bg-wrapper">
                         <div class="aside-common-bg-title-wrapper aside-title-wrapper-under-line">
-                            <h2 class="aside-common-bg-wrapper-title">Most Pupular</h2>
+                            <h2 class="aside-common-bg-wrapper-title">Most Popular</h2>
                         </div>
                         <div class="side-bar-card-sec-wrapper">
                             <?php while ($child_posts->have_posts()) : $child_posts->the_post();
