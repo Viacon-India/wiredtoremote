@@ -65,6 +65,13 @@
                         </div>
 
                         <h1 class="single-post-title"><?php echo the_title_attribute('echo=0'); ?></h1>
+
+                        <div class="post-written-by-wrapper">                            
+                            <div class="post-written-by">Written by: 
+                                <a href="<?php echo $author_URL; ?>"><?php echo $author_name; ?></a>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="single-banner-image-sec">
                         <figure class="single-banner-img-controller">
