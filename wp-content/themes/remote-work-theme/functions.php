@@ -186,6 +186,22 @@ function custom_opengraph_url($url) {
 }
 
 
+////************* Function code for block editro link hover design **********///////
+
+function wrap_paragraphs_with_link_class($content) {
+    return preg_replace_callback('/<p>(.*?)<\/p>/is', function($matches) {
+        $paragraph = $matches[1];
+
+        // If the paragraph contains a link but doesn't already have the class
+        if (strpos($paragraph, '<a') !== false && strpos($matches[0], 'class="link-hover-bg"') === false) {
+            return '<p class="link-hover-bg">' . $paragraph . '</p>';
+        }
+
+        return $matches[0]; // Return unchanged if no link or already has class
+    }, $content);
+}
+add_filter('the_content', 'wrap_paragraphs_with_link_class', 20);
+
 ////**************************************** calculator Shortcode ****************************************/////
 // Register Gratuity Calculator Shortcode
 function gratuity_calculator_shortcode() {
