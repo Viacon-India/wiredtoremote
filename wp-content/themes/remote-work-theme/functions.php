@@ -321,7 +321,7 @@ function gratuity_calculator_shortcode() {
           <label>Salary (Basic Pay + D.A)</label>
           <div class="gratuity-input-group">
             <span>₹</span>
-            <input type="number" id="salary" value="10000">
+            <input type="number" id="salary" value="10000" placeholder="Enter Your Amount">
           </div>
           
           <label>No. of Years Of Service (Min: 5 Years)</label>
