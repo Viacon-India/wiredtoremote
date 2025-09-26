@@ -207,7 +207,7 @@ add_filter('the_content', 'wrap_paragraphs_with_link_class', 20);
 function gratuity_calculator_shortcode() {
     ob_start(); ?>
     
-     <style>
+    <style>
         .gratuity-wrapper {
           font-family: Arial, sans-serif;
           padding: 40px 20px;
@@ -321,7 +321,7 @@ function gratuity_calculator_shortcode() {
           <label>Salary (Basic Pay + D.A)</label>
           <div class="gratuity-input-group">
             <span>₹</span>
-            <input type="number" id="salary" value="10000" placeholder="Enter Your Amount">
+            <input type="number" id="salary" value="0" placeholder="Enter Your Amount">
           </div>
           
           <label>No. of Years Of Service (Min: 5 Years)</label>
@@ -329,7 +329,7 @@ function gratuity_calculator_shortcode() {
             <input type="range" id="yearsRange" min="5" max="40" value="5" oninput="syncYearsFromSlider(this.value)">
           </div>
           <div class="years-control">
-            <input type="number" id="yearsInput" min="5" max="40" value="5" oninput="syncYearsFromInput(this.value)">
+            <input type="text" id="yearsInput" oninput="validateYears(this)" placeholder="5">
             <span>Years</span>
           </div>
         </div>
@@ -349,14 +349,32 @@ function gratuity_calculator_shortcode() {
         calculateGratuity();
       }
 
-      function syncYearsFromInput(val) {
-        if(val < 5) val = 5;
-        if(val > 40) val = 40;
-        document.getElementById('yearsInput').value = val;
+   function validateYears(input) {
+    // Remove non-numeric characters
+    let valStr = input.value.replace(/[^0-9]/g, "");
+    
+    // Allow user to type freely, only clamp on blur
+    input.value = valStr;
+
+    let val = parseInt(valStr);
+    if (!isNaN(val)) {
         document.getElementById('yearsRange').value = val;
         calculateGratuity();
-      }
+    } else {
+        document.getElementById('yearsRange').value = 5;
+        document.getElementById('result').innerText = "₹ 0";
+    }
+}
 
+// Clamp the value when user leaves the input
+document.getElementById('yearsInput').addEventListener('blur', function() {
+    let val = parseInt(this.value);
+    if (isNaN(val) || val < 5) val = 5;
+    if (val > 40) val = 40;
+    this.value = val;
+    document.getElementById('yearsRange').value = val;
+    calculateGratuity();
+});
       function calculateGratuity() {
         let salary = parseFloat(document.getElementById('salary').value);
         let years = parseInt(document.getElementById('yearsInput').value);
