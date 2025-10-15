@@ -618,7 +618,7 @@ function table_of_content($li_class, $a_class) {
 
 
 
-////**************************************** calculator Shortcode ****************************************/////
+////****************************************Gratuity Calculator Shortcode ****************************************/////
 // Register Gratuity Calculator Shortcode
 function gratuity_calculator_shortcode() {
     ob_start(); ?>
@@ -813,3 +813,725 @@ document.getElementById('yearsInput').addEventListener('blur', function() {
     return ob_get_clean();
 }
 add_shortcode('gratuity_calculator', 'gratuity_calculator_shortcode');
+
+
+
+////****************************************Salary Calculator Shortcode ****************************************/////
+
+
+function salary_calculator_shortcode() {
+    // Enqueue Chart.js
+    wp_enqueue_script('chartjs', 'https://cdn.jsdelivr.net/npm/chart.js', array(), null, true);
+    
+    // Start output buffering
+    ob_start();
+    ?>
+    
+    <style>
+    .salary-calc-wrapper :root{
+      --primary:#010080;
+      --card-bg:#fff;
+      --muted:#6b7280;
+      --surface:#f6f9fc;
+      --accent:#f1f7ff;
+      --round:12px;
+    }
+    .salary-calc-wrapper {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--surface);
+      padding:20px;
+      display:flex;
+      justify-content:center;
+    }
+    .salary-calc-wrapper .wrap{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:18px;
+    }
+
+    .salary-calc-wrapper .card{
+      background:var(--card-bg);
+      border-radius:var(--round);
+      padding:16px;
+      box-shadow:0 6px 24px rgba(10,10,30,0.06);
+    }
+    .salary-calc-wrapper h1{ margin:0 0 10px 0; font-size:18px; text-align:center}
+    .salary-calc-wrapper .section-title{ font-weight:600; color:#111827; margin-top:8px; margin-bottom:8px}
+    .salary-calc-wrapper label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px}
+    .salary-calc-wrapper input[type="number"], .salary-calc-wrapper select, .salary-calc-wrapper input[type="text"]{
+      width:100%; padding:10px; border-radius:8px; border:1px solid #e6e9ef; font-size:14px; box-sizing:border-box;
+    }
+    .salary-calc-wrapper .row{
+      display:flex; gap:10px; margin-bottom:10px;
+    }
+    .salary-calc-wrapper .col{ flex:1 }
+    .salary-calc-wrapper .btn{
+      background:var(--primary); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer;
+      font-weight:600;
+    }
+    .salary-calc-wrapper .btn.secondary{ background:#e6e6e6; color:#111; }
+    .salary-calc-wrapper .small{ font-size:13px; color:var(--muted) }
+    .salary-calc-wrapper .muted{ color:var(--muted) }
+    .salary-calc-wrapper .results { background:var(--accent); border-radius:10px; padding:12px; margin-top:12px }
+    .salary-calc-wrapper .result-row{ display:flex; justify-content:space-between; padding:8px 4px; border-bottom:1px solid rgba(0,0,0,0.03)}
+    .salary-calc-wrapper .result-row:last-child{ border-bottom:none }
+    .salary-calc-wrapper .highlight{ font-weight:700; color:var(--primary) }
+    
+    
+    /*////new btn design*/
+    /* === Button Styles === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(1, 0, 128, 0.2);
+}
+
+.btn:hover {
+  background: #1a1ab5;
+  box-shadow: 0 3px 8px rgba(1, 0, 128, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(1, 0, 128, 0.2);
+}
+
+/* Secondary Button */
+.btn.secondary {
+  background: #f3f4f6;
+  color: #111;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn.secondary:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+/* Common Button (for special actions like Download / Copy) */
+.btn.common-btn {
+  background: linear-gradient(135deg, #010080, #1e40af);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(1, 0, 128, 0.25);
+}
+
+.btn.common-btn:hover {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  transform: translateY(-1px);
+}
+
+
+    @media (max-width:1000px){
+      .salary-calc-wrapper .wrap{ grid-template-columns: 1fr; }
+    }
+
+    .salary-calc-wrapper .slab-table{ width:100%; border-collapse:collapse; margin-top:6px}
+    .salary-calc-wrapper .slab-table th, .salary-calc-wrapper .slab-table td{ padding:8px; border:1px solid #eee; text-align:left; font-size:13px }
+    .salary-calc-wrapper .tiny{ font-size:12px; color:var(--muted) }
+    .salary-calc-wrapper .controls{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap }
+    .salary-calc-wrapper .center{ text-align:center }
+    </style>
+
+    <div class="salary-calc-wrapper">
+      <div class="wrap">
+        <!-- LEFT: Inputs + settings -->
+        <div class="card" id="leftCard">
+          <h1>Salary Breakdown — Advanced (Step-by-step)</h1>
+
+          <!-- Step 1: Currency + Salary input -->
+          <div class="section">
+            <div class="section-title">Step 1 — Salary & Currency</div>
+            <div class="row">
+              <div class="col">
+                <label for="currency">Currency</label>
+                <select id="currency">
+                  <option value="INR">INR (₹)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="AED">AED (د.إ)</option>
+                </select>
+              </div>
+              <div style="width:140px">
+                <label for="period">View</label>
+                <select id="period">
+                  <option value="annual">Annually</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="salary">Gross Annual Salary (in selected currency)</label>
+            <input id="salary" type="number" placeholder="1200000" />
+
+            <div style="display:flex; gap:10px; margin-top:8px;">
+              <button class="btn common-btn" id="calcBtn">Calculate</button>
+              <button class="btn secondary" id="resetBtn">Reset</button>
+              <button class="btn secondary" id="fetchRatesBtn" title="Fetch live rates">Fetch Live Rates</button>
+            </div>
+
+            <div class="tiny" style="margin-top:8px">
+              Use the "Fetch Live Rates" button to update conversion rates from exchangerate.host (optional). Defaults are available offline.
+            </div>
+          </div>
+
+          <!-- Step 2: Component Breakdown -->
+          <div class="section" style="margin-top:14px">
+            <div class="section-title">Step 2 — Salary Components (auto-split)</div>
+            <div class="row">
+              <div class="col">
+                <label>Basic % of Gross</label>
+                <input id="basicPct" type="number" value="40" />
+              </div>
+              <div class="col">
+                <label>HRA % of Basic</label>
+                <input id="hraPct" type="number" value="50" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label>Conveyance (annual fixed)</label>
+                <input id="conveyance" type="number" value="19200" />
+              </div>
+              <div class="col">
+                <label>Medical (annual fixed)</label>
+                <input id="medical" type="number" value="15000" />
+              </div>
+            </div>
+
+            <div class="tiny">Special allowance will be computed as remainder after Basic, HRA, Conveyance & Medical.</div>
+          </div>
+
+          <!-- Step 3: Deductions -->
+          <div class="section" style="margin-top:14px">
+            <div class="section-title">Step 3 — Employee Deductions (editable)</div>
+            <div class="row">
+              <div class="col">
+                <label>Employee PF % (of Basic)</label>
+                <input id="empPfPct" type="number" value="12" />
+              </div>
+              <div class="col">
+                <label>Employer PF % (of Basic)</label>
+                <input id="emprPfPct" type="number" value="12" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label>ESI Employee %</label>
+                <input id="esiEmpPct" type="number" value="0" />
+              </div>
+              <div class="col">
+                <label>ESI Employer %</label>
+                <input id="esiEmprPct" type="number" value="0" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label>Professional Tax (annual)</label>
+                <input id="profTax" type="number" value="2400" />
+              </div>
+              <div class="col">
+                <label>Other custom deductions (annual)</label>
+                <input id="otherDed" type="number" value="0" />
+              </div>
+            </div>
+
+            <div class="tiny">You can fine-tune employee/employer shares. Employee deductions reduce take-home; employer contributions increase CTC.</div>
+          </div>
+
+          <!-- Step 4: Tax settings -->
+          <div class="section" style="margin-top:14px">
+            <div class="section-title">Step 4 — Tax & Slabs (editable)</div>
+
+            <div class="row">
+              <div class="col">
+                <label>Tax regime (sample)</label>
+                <select id="taxRegime">
+                  <option value="old">Old Regime (sample slabs)</option>
+                  <option value="new">New Regime (sample slabs)</option>
+                </select>
+              </div>
+              <div style="width:160px">
+                <label>Standard Deduction</label>
+                <input id="stdDed" type="number" value="50000" />
+              </div>
+            </div>
+
+            <div style="margin-top:8px">
+              <label class="tiny">Editable slabs (upper limit, percent). Enter 0 or empty for 'no upper limit' (i.e., last slab is unlimited).</label>
+
+              <table class="slab-table" id="slabTable">
+                <thead>
+                  <tr><th style="width:45%">Upper Limit (annual)</th><th style="width:30%">Rate %</th><th style="width:25%">Action</th></tr>
+                </thead>
+                <tbody id="slabBody"></tbody>
+              </table>
+
+              <div class="controls">
+                <button class="btn secondary" id="addSlabBtn">Add slab</button>
+                <button class="btn secondary" id="setDefaultOld">Defaults: Old</button>
+                <button class="btn secondary" id="setDefaultNew">Defaults: New</button>
+              </div>
+            </div>
+
+            <div style="margin-top:8px" class="tiny">
+              Cess %: <input id="cess" type="number" style="width:80px; display:inline-block;" value="4" /> — applies on computed tax.
+            </div>
+          </div>
+
+          <!-- Step 5: Employer contributions -->
+          <div class="section" style="margin-top:14px">
+            <div class="section-title">Step 5 — Employer Contributions (auto)</div>
+            <div class="tiny">Employer PF & ESI are computed from entered percentages. You can add other employer costs manually below.</div>
+            <div class="row" style="margin-top:8px">
+              <div class="col">
+                <label>Other Employer Contributions (annual)</label>
+                <input id="otherEmployer" type="number" value="0" />
+              </div>
+              <div style="width:160px; align-self:end;">
+                <button class="btn common-btn" id="downloadCsvBtn">Download CSV</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 6: Actions -->
+          <div class="section" style="margin-top:14px">
+            <div class="controls">
+              <button class="btn common-btn" id="recalcBtn">Recalculate Live</button>
+              <button class="btn secondary" id="printBtn">Print / Save as PDF</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Results + Chart -->
+        <div class="card" id="rightCard">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="section-title">Step 7 — Results</div>
+              <div class="tiny">Values shown in selected currency. Switch to Monthly view to see monthly amounts.</div>
+            </div>
+            <div class="center"><button class="btn secondary" id="toggleChartBtn">Toggle Chart</button></div>
+          </div>
+
+          <div id="resultsArea" class="results" style="margin-top:10px">
+            <div class="result-row"><div>Gross Annual Salary</div><div id="rGross">-</div></div>
+            <div class="result-row"><div>Basic</div><div id="rBasic">-</div></div>
+            <div class="result-row"><div>HRA</div><div id="rHra">-</div></div>
+            <div class="result-row"><div>Conveyance</div><div id="rConv">-</div></div>
+            <div class="result-row"><div>Medical</div><div id="rMed">-</div></div>
+            <div class="result-row"><div>Special Allowance</div><div id="rSpecial">-</div></div>
+
+            <div style="height:10px"></div>
+            <div class="result-row"><div>Employee Deductions (total)</div><div id="rDeductions">-</div></div>
+            <div class="result-row"><div>Net Annual Take-home (pre-tax)</div><div id="rPreTaxNet">-</div></div>
+            <div class="result-row"><div>Taxable Income (after standard ded & employee ded)</div><div id="rTaxable">-</div></div>
+            <div class="result-row"><div>Income Tax + Cess</div><div id="rTax">-</div></div>
+
+            <div style="height:8px"></div>
+            <div class="result-row highlight"><div>Net Annual Take-home (after tax)</div><div id="rNet">-</div></div>
+            <div class="result-row highlight"><div>Employer Cost to Company (CTC)</div><div id="rCtc">-</div></div>
+          </div>
+
+          <div id="chartWrap" style="margin-top:12px; display:block;">
+            <canvas id="pieChart" width="400" height="300"></canvas>
+          </div>
+
+          <div style="margin-top:10px; display:flex; gap:8px;">
+            <button class="btn common-btn" id="downloadCsvBtnBottom">Download CSV</button>
+            <button class="btn secondary" id="copyBtn">Copy Summary</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    (function() {
+    const symbols = { INR:'₹', USD:'$', EUR:'€', GBP:'£', AED:'د.إ' };
+    let rates = { INR:1, USD:0.012, EUR:0.011, GBP:0.0096, AED:0.044 };
+
+    const $ = id => document.getElementById(id);
+    const parseNum = v => { const n = parseFloat(v); return isNaN(n)?0:n; };
+
+    let pieChart = null;
+
+    function buildSlabRow(upper='', rate='') {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="slab-upper" type="number" placeholder="e.g., 250000" value="${upper}" style="width:100%"></td>
+        <td><input class="slab-rate" type="number" placeholder="Rate %" value="${rate}" style="width:100%"></td>
+        <td style="text-align:right"><button class="btn secondary remove-slab">Remove</button></td>
+      `;
+      return tr;
+    }
+
+    function refreshSlabTableFromDefaults(defaults){
+      const body = $('slabBody');
+      body.innerHTML = '';
+      defaults.forEach(s => {
+        const up = s.upTo ? s.upTo : '';
+        const r = s.rate;
+        body.appendChild(buildSlabRow(up, r));
+      });
+      attachSlabActions();
+    }
+
+    function attachSlabActions(){
+      document.querySelectorAll('.remove-slab').forEach(btn => {
+        btn.onclick = (e) => { e.target.closest('tr').remove(); }
+      });
+    }
+
+    const sampleOld = [
+      { upTo:250000, rate:0 },
+      { upTo:500000, rate:5 },
+      { upTo:1000000, rate:20 },
+      { upTo:0, rate:30 }
+    ];
+    const sampleNew = [
+      { upTo:300000, rate:0 },
+      { upTo:600000, rate:5 },
+      { upTo:900000, rate:10 },
+      { upTo:1200000, rate:15 },
+      { upTo:1500000, rate:20 },
+      { upTo:0, rate:30 }
+    ];
+
+    async function fetchLiveRates(){
+      try {
+        const symbolsList = ['USD','EUR','GBP','AED'].join(',');
+        const resp = await fetch(`https://api.exchangerate.host/latest?base=INR&symbols=${symbolsList}`);
+        const data = await resp.json();
+        if (data && data.rates) {
+          Object.keys(data.rates).forEach(k => { rates[k] = data.rates[k]; });
+          rates.INR = 1;
+          alert('Live rates fetched and applied (base=INR).');
+          recalc();
+        } else {
+          alert('Failed to fetch rates. Using static defaults.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error fetching live rates (CORS, network). Using static defaults.');
+      }
+    }
+
+    function convertAmount(amount, from, to){
+      if (!rates[from] || !rates[to]) return amount;
+      const amountInINR = amount / rates[from];
+      return amountInINR * rates[to];
+    }
+
+    function formatAmt(val, currency){
+      const n = Number(val) || 0;
+      try {
+        const opts = {minimumFractionDigits:2, maximumFractionDigits:2};
+        const locale = (currency === 'INR' ? 'en-IN' : 'en-US');
+        return new Intl.NumberFormat(locale, opts).format(n) + ' ' + (symbols[currency] || currency);
+      } catch (e){
+        return n.toFixed(2) + ' ' + (symbols[currency] || currency);
+      }
+    }
+
+    function readSlabsFromTable(){
+      const rows = document.querySelectorAll('#slabBody tr');
+      const slabs = [];
+      rows.forEach(row => {
+        const upper = parseNum(row.querySelector('.slab-upper').value);
+        const rate = parseNum(row.querySelector('.slab-rate').value);
+        slabs.push({ upTo: upper>0?upper:0, rate: rate });
+      });
+      if (slabs.length === 0) {
+        return sampleOld;
+      }
+      return slabs;
+    }
+
+    function computeTaxUsingSlabs(taxableIncome, slabs, cessPct=4){
+      const s = slabs.slice().map(x => ({upTo: x.upTo || 0, rate: x.rate || 0}));
+      s.sort((a,b) => {
+        if (a.upTo === 0) return 1;
+        if (b.upTo === 0) return -1;
+        return a.upTo - b.upTo;
+      });
+
+      let tax = 0;
+      let prevLimit = 0;
+      for (let i=0;i<s.length;i++){
+        const limit = s[i].upTo === 0 ? Infinity : s[i].upTo;
+        if (taxableIncome <= prevLimit) break;
+        const taxablePortion = Math.min(taxableIncome, limit) - prevLimit;
+        if (taxablePortion > 0) {
+          tax += (taxablePortion * (s[i].rate/100));
+        }
+        prevLimit = limit;
+      }
+      const cess = tax * (cessPct/100);
+      return { tax: tax, cess: cess, totalTax: tax + cess };
+    }
+
+    function computeAll(){
+      const currency = $('currency').value;
+      const period = $('period').value;
+      const gross = parseNum($('salary').value);
+
+      if (gross <= 0) {
+        return null;
+      }
+
+      const basicPct = parseNum($('basicPct').value)/100;
+      const hraPct = parseNum($('hraPct').value)/100;
+      const conveyance = parseNum($('conveyance').value);
+      const medical = parseNum($('medical').value);
+
+      const basic = gross * basicPct;
+      const hra = basic * hraPct;
+      const special = Math.max(0, gross - (basic + hra + conveyance + medical));
+
+      const empPfPct = parseNum($('empPfPct').value)/100;
+      const empPf = basic * empPfPct;
+      const esiEmpPct = parseNum($('esiEmpPct').value)/100;
+      const esiEmp = gross * esiEmpPct;
+      const profTax = parseNum($('profTax').value);
+      const otherDed = parseNum($('otherDed').value);
+
+      const totalEmployeeDeductions = empPf + esiEmp + profTax + otherDed;
+
+      const preTaxNet = gross - totalEmployeeDeductions;
+
+      const stdDed = parseNum($('stdDed').value);
+      const taxableIncome = Math.max(0, preTaxNet - stdDed);
+
+      const slabs = readSlabsFromTable();
+      const cess = parseNum($('cess').value) || 0;
+      const computedTax = computeTaxUsingSlabs(taxableIncome, slabs, cess);
+
+      const emprPfPct = parseNum($('emprPfPct').value)/100;
+      const emprPf = basic * emprPfPct;
+      const esiEmprPct = parseNum($('esiEmprPct').value)/100;
+      const esiEmpr = gross * esiEmprPct;
+      const otherEmployer = parseNum($('otherEmployer').value);
+
+      const employerContributions = emprPf + esiEmpr + otherEmployer;
+
+      const netAfterTax = preTaxNet - computedTax.totalTax;
+
+      const ctc = gross + employerContributions;
+
+      const breakdown = {
+        currency, period,
+        gross, basic, hra, conveyance, medical, special,
+        empPf, esiEmp, profTax, otherDed, totalEmployeeDeductions,
+        preTaxNet, stdDed, taxableIncome,
+        tax: computedTax.tax, cess: computedTax.cess, totalTax: computedTax.totalTax,
+        netAfterTax, employerContributions, emprPf, esiEmpr, otherEmployer, ctc,
+        slabsUsed: slabs
+      };
+      return breakdown;
+    }
+
+    function updateUI(bd){
+      if (!bd) return;
+      const cur = bd.currency;
+
+      $('rGross').innerText = formatAmt(bd.gross, cur);
+      $('rBasic').innerText = formatAmt(bd.basic, cur);
+      $('rHra').innerText = formatAmt(bd.hra, cur);
+      $('rConv').innerText = formatAmt(bd.conveyance, cur);
+      $('rMed').innerText = formatAmt(bd.medical, cur);
+      $('rSpecial').innerText = formatAmt(bd.special, cur);
+
+      $('rDeductions').innerText = formatAmt(bd.totalEmployeeDeductions, cur);
+      $('rPreTaxNet').innerText = formatAmt(bd.preTaxNet, cur);
+      $('rTaxable').innerText = formatAmt(bd.taxableIncome, cur);
+      $('rTax').innerText = formatAmt(bd.totalTax, cur);
+
+      $('rNet').innerText = formatAmt(bd.netAfterTax, cur);
+      $('rCtc').innerText = formatAmt(bd.ctc, cur);
+
+      updateChart(bd);
+    }
+
+    function updateChart(bd){
+      const ctx = document.getElementById('pieChart').getContext('2d');
+
+      const labels = ['Basic','HRA','Special','Employee Deductions','Employer Contributions'];
+      const data = [
+        bd.basic,
+        bd.hra,
+        bd.special,
+        bd.totalEmployeeDeductions,
+        bd.employerContributions
+      ];
+
+      if (pieChart) pieChart.destroy();
+      pieChart = new Chart(ctx, {
+        type:'pie',
+        data: {
+          labels,
+          datasets:[{ data, label:'Salary split' }]
+        },
+        options:{ plugins:{ legend:{ position:'bottom' } } }
+      });
+    }
+
+    function buildCsv(bd){
+      if (!bd) return '';
+      const rows = [
+        ['Field','Amount ('+bd.currency+')'],
+        ['Gross Annual Salary', bd.gross],
+        ['Basic', bd.basic],
+        ['HRA', bd.hra],
+        ['Conveyance', bd.conveyance],
+        ['Medical', bd.medical],
+        ['Special Allowance', bd.special],
+        ['------','------'],
+        ['Employee PF (annual)', bd.empPf],
+        ['ESI Employee (annual)', bd.esiEmp],
+        ['Professional Tax', bd.profTax],
+        ['Other Deductions', bd.otherDed],
+        ['Total Employee Deductions', bd.totalEmployeeDeductions],
+        ['Pre-Tax Net', bd.preTaxNet],
+        ['Standard Deduction', bd.stdDed],
+        ['Taxable Income', bd.taxableIncome],
+        ['Income Tax', bd.tax],
+        ['Cess', bd.cess],
+        ['Total Tax', bd.totalTax],
+        ['Net After Tax', bd.netAfterTax],
+        ['Employer PF (annual)', bd.emprPf],
+        ['ESI Employer (annual)', bd.esiEmpr],
+        ['Other Employer Contributions', bd.otherEmployer],
+        ['Employer Contributions Total', bd.employerContributions],
+        ['CTC', bd.ctc]
+      ];
+      return rows.map(r => r.map(c => `"${(c===null||c===undefined)?'':c}"`).join(',')).join('\n');
+    }
+
+    function downloadCsv(){
+      const bd = computeAll();
+      if (!bd) { alert('Please enter salary first.'); return;}
+      const csv = buildCsv(bd);
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'salary_breakdown.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function recalc(){
+      const bd = computeAll();
+      if (!bd) return;
+      updateUI(bd);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    function init() {
+      refreshSlabTableFromDefaults(sampleOld);
+
+      $('addSlabBtn').onclick = () => {
+        $('slabBody').appendChild(buildSlabRow('',''));
+        attachSlabActions();
+      };
+      $('setDefaultOld').onclick = () => refreshSlabTableFromDefaults(sampleOld);
+      $('setDefaultNew').onclick = () => refreshSlabTableFromDefaults(sampleNew);
+
+      $('calcBtn').onclick = () => {
+        const b = computeAll();
+        if (!b) { alert('Enter a valid gross salary.'); return; }
+        updateUI(b);
+        $('resultsArea').scrollIntoView({behavior:'smooth'});
+      };
+
+      $('recalcBtn').onclick = () => recalc();
+      $('resetBtn').onclick = () => {
+        $('salary').value = '';
+        $('basicPct').value = 40;
+        $('hraPct').value = 50;
+        $('conveyance').value = 19200;
+        $('medical').value = 15000;
+        $('empPfPct').value = 12; $('emprPfPct').value = 12;
+        $('esiEmpPct').value = 0; $('esiEmprPct').value = 0;
+        $('profTax').value = 2400; $('otherDed').value = 0;
+        $('stdDed').value = 50000; $('cess').value = 4;
+        refreshSlabTableFromDefaults(sampleOld);
+        recalc();
+      };
+
+      $('fetchRatesBtn').onclick = () => fetchLiveRates();
+
+      const inputsToWatch = ['currency','period','salary','basicPct','hraPct','conveyance','medical','empPfPct','emprPfPct','esiEmpPct','esiEmprPct','profTax','otherDed','stdDed','cess','otherEmployer'];
+      let debounceTimer = null;
+      inputsToWatch.forEach(id => {
+        const el = $(id);
+        if (!el) return;
+        el.addEventListener('input', () => {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(recalc, 350);
+        });
+        el.addEventListener('change', () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(recalc, 200);});
+      });
+
+      document.body.addEventListener('input', (e) => {
+        if (e.target.matches('.slab-upper') || e.target.matches('.slab-rate')) {
+          clearTimeout(debounceTimer); debounceTimer = setTimeout(recalc, 400);
+        }
+      });
+
+      $('toggleChartBtn').onclick = () => {
+        const el = $('chartWrap');
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+      };
+
+      $('printBtn').onclick = () => { window.print(); };
+
+      $('downloadCsvBtn').onclick = downloadCsv;
+      $('downloadCsvBtnBottom').onclick = downloadCsv;
+
+      $('copyBtn').onclick = () => {
+        const bd = computeAll();
+        if (!bd) { alert('No data'); return; }
+        const lines = [
+          `Gross: ${formatAmt(bd.gross, bd.currency)}`,
+          `Net (after tax): ${formatAmt(bd.netAfterTax, bd.currency)}`,
+          `CTC: ${formatAmt(bd.ctc, bd.currency)}`
+        ];
+        navigator.clipboard?.writeText(lines.join('\n')).then(()=>alert('Summary copied to clipboard.'));
+      };
+
+      recalc();
+    }
+    })();
+    </script>
+
+    <?php
+    return ob_get_clean();
+}
+
+
+add_shortcode('salary_calculator', 'salary_calculator_shortcode');
