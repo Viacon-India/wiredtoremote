@@ -879,8 +879,14 @@ function salary_calculator_shortcode() {
     .salary-calc-wrapper .result-row:last-child{ border-bottom:none }
     .salary-calc-wrapper .highlight{ font-weight:700; color:var(--primary) }
     
-    
-    /*////new btn design*/
+    /*section color design*/
+   .salary-calc-wrapper .section {
+  background-color: #b8dffc;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+}
     /* === Button Styles === */
 .btn {
   display: inline-flex;
@@ -1132,22 +1138,22 @@ function salary_calculator_shortcode() {
           </div>
 
           <div id="resultsArea" class="results" style="margin-top:10px">
-            <div class="result-row"><div>Gross Annual Salary</div><div id="rGross">-</div></div>
-            <div class="result-row"><div>Basic</div><div id="rBasic">-</div></div>
-            <div class="result-row"><div>HRA</div><div id="rHra">-</div></div>
-            <div class="result-row"><div>Conveyance</div><div id="rConv">-</div></div>
-            <div class="result-row"><div>Medical</div><div id="rMed">-</div></div>
-            <div class="result-row"><div>Special Allowance</div><div id="rSpecial">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Gross Annual Salary</div><div id="rGross" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Basic</div><div id="rBasic" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">HRA</div><div id="rHra" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Conveyance</div><div id="rConv" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Medical</div><div id="rMed" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Special Allowance</div><div id="rSpecial" style="font-size:15px;">-</div></div>
 
             <div style="height:10px"></div>
-            <div class="result-row"><div>Employee Deductions (total)</div><div id="rDeductions">-</div></div>
-            <div class="result-row"><div>Net Annual Take-home (pre-tax)</div><div id="rPreTaxNet">-</div></div>
-            <div class="result-row"><div>Taxable Income (after standard ded & employee ded)</div><div id="rTaxable">-</div></div>
-            <div class="result-row"><div>Income Tax + Cess</div><div id="rTax">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Employee Deductions <br> (total)</div><div id="rDeductions" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Net Annual Take-home <br> (pre-tax)</div><div id="rPreTaxNet" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Taxable Income <br> (after standard ded & <br> employee ded)</div><div id="rTaxable" style="font-size:15px;">-</div></div>
+            <div class="result-row"><div style="font-size:18px;">Income Tax + Cess</div><div id="rTax" style="font-size:15px;">-</div></div>
 
             <div style="height:8px"></div>
-            <div class="result-row highlight"><div>Net Annual Take-home (after tax)</div><div id="rNet">-</div></div>
-            <div class="result-row highlight"><div>Employer Cost to Company (CTC)</div><div id="rCtc">-</div></div>
+            <div class="result-row highlight"><div style="font-size:18px;">Net Annual Take-home <br> (after tax)</div><div id="rNet" style="font-size:15px;">-</div></div>
+            <div class="result-row highlight"><div style="font-size:18px;">Employer Cost to Company <br> (CTC)</div><div id="rCtc" style="font-size:15px;">-</div></div>
           </div>
 
           <div id="chartWrap" style="margin-top:12px; display:block;">
@@ -1535,3 +1541,4 @@ function salary_calculator_shortcode() {
 
 
 add_shortcode('salary_calculator', 'salary_calculator_shortcode');
+
