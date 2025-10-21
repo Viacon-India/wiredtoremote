@@ -19,6 +19,360 @@
     ));
     $fast_facts = get_post_meta($post_id, "fast-facts", true);
     customSetPostViews($post_id); ?>
+    
+<style>
+/* ==========================================
+   DESKTOP STYLES (Default)
+   ========================================== */
+
+.single-post-content-wrapper {
+    width: 152.5%;
+    max-width: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.single-post-content-wrapper img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.fast_facts {
+    width: 100%;
+}
+
+.toc-container, .table-of-contents {
+    width: 100% !important;
+}
+
+.single-post-content-wrapper form, 
+.single-post-content-wrapper input, 
+.single-post-content-wrapper select, 
+.single-post-content-wrapper textarea {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+.single-post-content-wrapper .single-post-content,
+.single-post-content-wrapper .single-post-content p,
+.single-post-content-wrapper .single-post-content li,
+.single-post-content-wrapper .single-post-content h1,
+.single-post-content-wrapper .single-post-content h2,
+.single-post-content-wrapper .single-post-content h3,
+.single-post-content-wrapper .single-post-content h4,
+.single-post-content-wrapper .single-post-content h5,
+.single-post-content-wrapper .single-post-content h6,
+.single-post-content-wrapper .single-post-content strong {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+}
+
+.single-post-content-wrapper .single-post-content strong {
+    font-size: 20px !important;
+}
+
+/* Target only H2 inside WordPress heading blocks */
+.wp-block-heading h2 {
+    font-size: 28px;
+}
+/* ==========================================
+   MOBILE STYLES (max-width: 768px)
+   ========================================== */
+
+@media (max-width: 768px) {
+    /* Main content wrapper - full width on mobile */
+    .single-post-content-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Single main content area */
+    .single-main-content {
+        padding: 0 !important;
+    }
+
+    .single-main-content-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 0 !important;
+    }
+
+    /* Table of Contents section - full width, no side padding */
+    .toc-wrapper-sec {
+        width: 100% !important;
+        padding: 20px 15px !important;
+        margin: 0 !important;
+        background-color: #f5f5f5;
+        box-sizing: border-box;
+    }
+
+    .toc-wrapper-box {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .toc-title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .toc-title {
+        font-size: 18px !important;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    #toc {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .box-item-sec {
+        list-style: none;
+        padding-left: 0 !important;
+    }
+
+    .box-item {
+        font-size: 16px !important;
+        line-height: 1.5 !important;
+        padding: 8px 0;
+    }
+
+    /* Content section - full width with padding */
+    .single-post-content {
+        width: 100% !important;
+        padding: 20px 15px !important;
+        box-sizing: border-box;
+        background-color: #ffffff !important;
+    }
+
+    /* Content typography */
+    .single-post-content-wrapper .single-post-content p,
+    .single-post-content-wrapper .single-post-content li {
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+        margin-bottom: 16px;
+    }
+
+    .single-post-content-wrapper .single-post-content h1 {
+        font-size: 28px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 20px;
+    }
+
+    .single-post-content-wrapper .single-post-content h2 {
+        font-size: 24px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 18px;
+        margin-top: 24px;
+    }
+
+    .single-post-content-wrapper .single-post-content h3 {
+        font-size: 20px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 16px;
+        margin-top: 20px;
+    }
+
+    .single-post-content-wrapper .single-post-content h4,
+    .single-post-content-wrapper .single-post-content h5,
+    .single-post-content-wrapper .single-post-content h6 {
+        font-size: 18px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 14px;
+        margin-top: 18px;
+    }
+
+    .single-post-content-wrapper .single-post-content strong {
+        font-size: 17px !important;
+        font-weight: 600;
+    }
+
+    /* Images - full width within content padding */
+    .single-post-content-wrapper img {
+        max-width: 100%;
+        height: auto;
+        margin: 20px 0;
+    }
+
+    /* Fast Facts section */
+    .fast_facts {
+        width: 100%;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #1C3C19;
+        margin-bottom: 24px;
+    }
+
+    .fast_facts h3 {
+        font-size: 20px !important;
+        margin-bottom: 15px;
+    }
+
+    .fast_facts .fact {
+        margin-bottom: 12px;
+    }
+
+    .fast_facts .fact p {
+        font-size: 15px !important;
+        margin-bottom: 4px;
+    }
+
+    /* Lists */
+    .single-post-content ul,
+    .single-post-content ol {
+        padding-left: 20px;
+        margin-bottom: 16px;
+    }
+
+    .single-post-content li {
+        margin-bottom: 8px;
+    }
+
+    /* Blockquotes */
+    .single-post-content blockquote {
+        border-left: 4px solid #1C3C19;
+        padding-left: 16px;
+        margin: 20px 0;
+        font-style: italic;
+    }
+
+    /* Tables - make them scrollable */
+    .single-post-content table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        margin: 20px 0;
+    }
+
+    .single-post-content table td,
+    .single-post-content table th {
+        font-size: 14px !important;
+        padding: 8px;
+    }
+
+    /* Share buttons */
+    .share-this-article-single {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .single-share-this-article-title {
+        font-size: 18px !important;
+        margin-bottom: 15px;
+    }
+
+    .share-article-icon-wrapper {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .share-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Comment section */
+    .all-comments-reply-sec {
+        margin-top: 30px;
+    }
+
+    .comment-replay-title {
+        font-size: 20px !important;
+        margin-bottom: 20px;
+    }
+
+    .comment-replay-card {
+        padding: 15px 0;
+    }
+
+    /* Forms - full width */
+    .single-post-content form {
+        width: 100% !important;
+        margin: 20px 0;
+    }
+
+    .single-post-content input,
+    .single-post-content select,
+    .single-post-content textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 16px !important;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    /* Buttons */
+    .single-post-content button,
+    .single-post-content .button,
+    .single-post-content input[type="submit"] {
+        width: 100% !important;
+        max-width: 100%;
+        font-size: 16px !important;
+        padding: 12px 20px;
+        box-sizing: border-box;
+    }
+}
+
+/* ==========================================
+   TABLET STYLES (769px - 1024px)
+   ========================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .single-post-content-wrapper {
+        width: 120%;
+    }
+
+    .toc-wrapper-sec {
+        padding: 20px;
+    }
+
+    .single-post-content {
+        padding: 30px 20px !important;
+    }
+}
+
+/* ==========================================
+   SMALL MOBILE (max-width: 480px)
+   ========================================== */
+
+@media (max-width: 480px) {
+    .toc-wrapper-sec {
+        padding: 15px 12px !important;
+    }
+
+    .single-post-content {
+        padding: 15px 12px !important;
+    }
+
+    .single-post-content-wrapper .single-post-content h1 {
+        font-size: 24px !important;
+    }
+
+    .single-post-content-wrapper .single-post-content h2 {
+        font-size: 20px !important;
+    }
+
+    .single-post-content-wrapper .single-post-content h3 {
+        font-size: 18px !important;
+    }
+}
+</style>
+
 
     <section class="single-page">
         <div class="single-banner">
@@ -105,7 +459,7 @@
                         </div>
                     </div>
                     <div class="single-post-content-wrapper">
-                        <div class="single-post-content">
+                        <div class="single-post-content" style="background-color: #ffff;">
                             <?php if (!empty($fast_facts)) :
                                 echo '<div class="fast_facts">';
                                 echo '<h3>Fast Facts</h3>';
@@ -222,7 +576,7 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <?php get_sidebar(); ?>
+                    <?php /* get_sidebar(); */ ?>
                 </div>
             </div>
         </div>

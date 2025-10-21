@@ -47,7 +47,7 @@ function theme_settings() {
 	add_settings_field('subscription_text', 'Subscription Content', 'footer_text_callback', 'theme_menu', 'footer_settings','subscription_text');
 	register_setting('theme_menu','subscription_text', 'esc_attr');
 	
-	$socials = array('facebook','linkedin');
+	$socials = array('facebook','linkedin','instagram');
 	foreach($socials as $social){
 		add_settings_field($social, ucwords(str_replace('_',' ',$social)).' Link', 'social_content_callback', 'theme_menu', 'footer_settings',$social);
 		register_setting('theme_menu',$social, 'esc_attr');
@@ -827,131 +827,352 @@ function salary_calculator_shortcode() {
     ob_start();
     ?>
     
-    <style>
-    .salary-calc-wrapper :root{
-      --primary:#010080;
-      --card-bg:#fff;
-      --muted:#6b7280;
-      --surface:#f6f9fc;
-      --accent:#f1f7ff;
-      --round:12px;
-    }
-    .salary-calc-wrapper {
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:var(--surface);
-      padding:20px;
-      display:flex;
-      justify-content:center;
-    }
-    .salary-calc-wrapper .wrap{
-      width:100%;
-      max-width:1100px;
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:18px;
-    }
-
-    .salary-calc-wrapper .card{
-      background:var(--card-bg);
-      border-radius:var(--round);
-      padding:16px;
-      box-shadow:0 6px 24px rgba(10,10,30,0.06);
-    }
-    .salary-calc-wrapper h1{ margin:0 0 10px 0; font-size:18px; text-align:center}
-    .salary-calc-wrapper .section-title{ font-weight:600; color:#111827; margin-top:8px; margin-bottom:8px}
-    .salary-calc-wrapper label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px}
-    .salary-calc-wrapper input[type="number"], .salary-calc-wrapper select, .salary-calc-wrapper input[type="text"]{
-      width:100%; padding:10px; border-radius:8px; border:1px solid #e6e9ef; font-size:14px; box-sizing:border-box;
-    }
-    .salary-calc-wrapper .row{
-      display:flex; gap:10px; margin-bottom:10px;
-    }
-    .salary-calc-wrapper .col{ flex:1 }
-    .salary-calc-wrapper .btn{
-      background:var(--primary); color:#fff; border:none; padding:10px 14px; border-radius:8px; cursor:pointer;
-      font-weight:600;
-    }
-    .salary-calc-wrapper .btn.secondary{ background:#e6e6e6; color:#111; }
-    .salary-calc-wrapper .small{ font-size:13px; color:var(--muted) }
-    .salary-calc-wrapper .muted{ color:var(--muted) }
-    .salary-calc-wrapper .results { background:var(--accent); border-radius:10px; padding:12px; margin-top:12px }
-    .salary-calc-wrapper .result-row{ display:flex; justify-content:space-between; padding:8px 4px; border-bottom:1px solid rgba(0,0,0,0.03)}
-    .salary-calc-wrapper .result-row:last-child{ border-bottom:none }
-    .salary-calc-wrapper .highlight{ font-weight:700; color:var(--primary) }
-    
-    /*section color design*/
-   .salary-calc-wrapper .section {
-  background-color: #b8dffc;
-  border-radius: 10px;
-  padding: 12px;
-  margin-bottom: 14px;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+ <style>
+/* =====================================
+   ROOT VARIABLES
+===================================== */
+.salary-calc-wrapper :root {
+  --primary: #010080;
+  --card-bg: #fff;
+  --muted: #6b7280;
+  --surface: #f6f9fc;
+  --accent: #f1f7ff;
+  --round: 12px;
 }
-    /* === Button Styles === */
-.btn {
-  display: inline-flex;
-  align-items: center;
+
+/* =====================================
+   CONTAINER
+===================================== */
+.salary-calc-wrapper {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--surface);
+  padding: 20px;
+  display: flex;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Wrapper grid */
+.salary-calc-wrapper .wrap {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 18px;
+  box-sizing: border-box;
+}
+
+/* =====================================
+   CARD
+===================================== */
+.salary-calc-wrapper .card {
+  background: var(--card-bg);
+  border-radius: var(--round);
+  padding: 16px;
+  box-shadow: 0 6px 24px rgba(10,10,30,0.06);
+  box-sizing: border-box;
+}
+
+/* =====================================
+   TYPOGRAPHY
+===================================== */
+.salary-calc-wrapper h1 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.salary-calc-wrapper .section-title {
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  color: #111827;
+  margin: 8px 0;
+}
+
+.salary-calc-wrapper label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.salary-calc-wrapper .small,
+.salary-calc-wrapper .tiny,
+.salary-calc-wrapper .muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* =====================================
+   INPUTS & SELECTS
+===================================== */
+.salary-calc-wrapper input[type="number"],
+.salary-calc-wrapper select,
+.salary-calc-wrapper input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* =====================================
+   ROWS & COLUMNS
+===================================== */
+.salary-calc-wrapper .row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.salary-calc-wrapper .col {
+  flex: 1;
+}
+
+/* =====================================
+   BUTTONS
+===================================== */
+.salary-calc-wrapper .btn {
   background: var(--primary);
   color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
   box-shadow: 0 2px 6px rgba(1, 0, 128, 0.2);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
 }
 
-.btn:hover {
+.salary-calc-wrapper .btn:hover {
   background: #1a1ab5;
   box-shadow: 0 3px 8px rgba(1, 0, 128, 0.3);
   transform: translateY(-1px);
 }
 
-.btn:active {
+.salary-calc-wrapper .btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(1, 0, 128, 0.2);
 }
 
-/* Secondary Button */
-.btn.secondary {
+.salary-calc-wrapper .btn.secondary {
   background: #f3f4f6;
   color: #111;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.btn.secondary:hover {
+.salary-calc-wrapper .btn.secondary:hover {
   background: #e5e7eb;
-  transform: translateY(-1px);
 }
 
-/* Common Button (for special actions like Download / Copy) */
-.btn.common-btn {
+.salary-calc-wrapper .btn.common-btn {
   background: linear-gradient(135deg, #010080, #1e40af);
   color: #fff;
-  box-shadow: 0 4px 10px rgba(1, 0, 128, 0.25);
+  box-shadow: 0 4px 10px rgba(1,0,128,0.25);
 }
 
-.btn.common-btn:hover {
+.salary-calc-wrapper .btn.common-btn:hover {
   background: linear-gradient(135deg, #1e40af, #3b82f6);
-  transform: translateY(-1px);
+}
+
+/* =====================================
+   CONTROLS (Reset / Fetch)
+===================================== */
+.salary-calc-wrapper .controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.salary-calc-wrapper .controls .btn {
+  flex: 1 1 auto;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* =====================================
+   RESULTS
+===================================== */
+.salary-calc-wrapper .results {
+  background: var(--accent);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.salary-calc-wrapper .result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+
+.salary-calc-wrapper .result-row:last-child {
+  border-bottom: none;
+}
+
+.salary-calc-wrapper .highlight {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* =====================================
+   SECTIONS
+===================================== */
+.salary-calc-wrapper .section {
+  background-color: #bbd0e0;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+}
+
+/* =====================================
+   TABLES
+===================================== */
+.salary-calc-wrapper .slab-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+}
+
+.salary-calc-wrapper .slab-table th,
+.salary-calc-wrapper .slab-table td {
+  padding: 8px;
+  border: 1px solid #eee;
+  text-align: left;
+  font-size: 13px;
+}
+
+/* =====================================
+   CENTER
+===================================== */
+.salary-calc-wrapper .center {
+  text-align: center;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+
+
+/* General button group styling */
+.salary-calc-wrapper .controls,
+.salary-calc-wrapper .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.salary-calc-wrapper .controls .btn,
+.salary-calc-wrapper .button-group .btn {
+  flex: 1 1 auto;       /* buttons grow equally */
+  min-width: 140px;     /* prevents buttons from shrinking too much */
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+  .salary-calc-wrapper .controls,
+  .salary-calc-wrapper .button-group {
+    flex-direction: column; /* stack buttons vertically */
+    gap: 8px;
+  }
+  .salary-calc-wrapper .controls .btn,
+  .salary-calc-wrapper .button-group .btn {
+    width: 100%;      /* full width buttons on mobile */
+    min-width: 0;     /* reset min-width for stacking */
+  }
 }
 
 
-    @media (max-width:1000px){
-      .salary-calc-wrapper .wrap{ grid-template-columns: 1fr; }
-    }
 
-    .salary-calc-wrapper .slab-table{ width:100%; border-collapse:collapse; margin-top:6px}
-    .salary-calc-wrapper .slab-table th, .salary-calc-wrapper .slab-table td{ padding:8px; border:1px solid #eee; text-align:left; font-size:13px }
-    .salary-calc-wrapper .tiny{ font-size:12px; color:var(--muted) }
-    .salary-calc-wrapper .controls{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap }
-    .salary-calc-wrapper .center{ text-align:center }
-    </style>
+
+
+
+@media (max-width: 1000px) {
+  .salary-calc-wrapper .wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .salary-calc-wrapper {
+    padding: 12px;
+  }
+
+  .salary-calc-wrapper .wrap {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .salary-calc-wrapper .row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .salary-calc-wrapper .row .col,
+  .salary-calc-wrapper [style*="width:"] {
+    width: 100% !important;
+  }
+
+  .salary-calc-wrapper input[type="number"],
+  .salary-calc-wrapper select,
+  .salary-calc-wrapper input[type="text"] {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .salary-calc-wrapper .btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .salary-calc-wrapper .result-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .salary-calc-wrapper .result-row div {
+    font-size: 14px;
+  }
+
+  .salary-calc-wrapper .results {
+    padding: 10px;
+  }
+
+  .salary-calc-wrapper .section {
+    padding: 10px;
+  }
+
+  #pieChart {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .salary-calc-wrapper .controls {
+    flex-direction: column;
+  }
+
+  .salary-calc-wrapper .controls .btn {
+    width: 100%;
+  }
+}
+</style>
+
+
 
     <div class="salary-calc-wrapper">
       <div class="wrap">
@@ -985,11 +1206,12 @@ function salary_calculator_shortcode() {
             <label for="salary">Gross Annual Salary (in selected currency)</label>
             <input id="salary" type="number" placeholder="1200000" />
 
-            <div style="display:flex; gap:10px; margin-top:8px;">
+          <div class="controls">
               <button class="btn common-btn" id="calcBtn">Calculate</button>
               <button class="btn secondary" id="resetBtn">Reset</button>
               <button class="btn secondary" id="fetchRatesBtn" title="Fetch live rates">Fetch Live Rates</button>
             </div>
+
 
             <div class="tiny" style="margin-top:8px">
               Use the "Fetch Live Rates" button to update conversion rates from exchangerate.host (optional). Defaults are available offline.
@@ -1160,10 +1382,11 @@ function salary_calculator_shortcode() {
             <canvas id="pieChart" width="400" height="300"></canvas>
           </div>
 
-          <div style="margin-top:10px; display:flex; gap:8px;">
-            <button class="btn common-btn" id="downloadCsvBtnBottom">Download CSV</button>
-            <button class="btn secondary" id="copyBtn">Copy Summary</button>
-          </div>
+          <div class="button-group">
+              <button class="btn common-btn" id="downloadCsvBtnBottom">Download CSV</button>
+              <button class="btn secondary" id="copyBtn">Copy Summary</button>
+            </div>
+
         </div>
       </div>
     </div>
@@ -1541,4 +1764,5 @@ function salary_calculator_shortcode() {
 
 
 add_shortcode('salary_calculator', 'salary_calculator_shortcode');
+
 
