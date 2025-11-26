@@ -2,7 +2,9 @@
         <?php $footer_text = get_option('footer_text');
         $subscription_text = get_option('subscription_text');
         $facebook = get_option('facebook');
-        $linkedin = get_option('linkedin'); ?>
+        $linkedin = get_option('linkedin');
+        $instagram = get_option('instagram');
+        ?>
         <footer class="footer-wrapper">
             <div class="footer-sec">
                 <div class="container mx-auto">
@@ -21,7 +23,33 @@
                                     } ?>
                                 </figure>
                             </a>
-                            <?php if (!empty($footer_text)) echo '<p class="footer-desc">' . $footer_text . '</p>'; ?>
+                            <?php if (!empty($footer_text)) echo '<p class="footer-desc">' . $footer_text . '</p>'; ?><br>
+                            
+                           <!--google badge-->
+                            <a href="https://www.google.com/preferences/source?q=wiredtoremote.com" target="_blank"   style="position: relative;  display: inline-block; "   onmouseover="this.querySelector('.tip').style.opacity='1';" onmouseout="this.querySelector('.tip').style.opacity='0';" >
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/wiredtoremote.png" alt="Badge" class=""   style="width:300px; height:auto;"/>
+                                <!-- Tooltip element -->
+                                <span class="tip"
+                                      style="
+                                          position: absolute;
+                                          bottom: 110%;
+                                          left: 50%;    
+                                          transform: translateX(-50%);
+                                          background: #fff;
+                                          color: #000;
+                                          padding: 6px 10px;
+                                          border-radius: 6px;
+                                          font-size: 12px;
+                                          white-space: nowrap;
+                                          opacity: 0;
+                                          pointer-events: none;
+                                          transition: opacity .25s ease;
+                                      ">
+                                    Follow us on Google
+                                </span>
+                                </a>
+                        
+                        
                         </div>
                         <div class="footer-detail">
                             <?php if (isset(get_nav_menu_locations()['company-menu'])) :
@@ -83,18 +111,39 @@
             </div>
 
             <div class="footer-copyright-sec">
-                <div class="container mx-auto ">
-                    <div class="footer-copyright-sec-inner">
-                        <p class="copyright">© <?php echo date('Y'); ?> Wired To Remote. All rights reserved.</p>
-                        <?php if (!empty($facebook) && (filter_var($facebook, FILTER_VALIDATE_URL) !== false) || (!empty($linkedin) && (filter_var($linkedin, FILTER_VALIDATE_URL) !== false))) :
-                            echo '<div class="footer-icon-sec">';
-                            if (!empty($facebook) && (filter_var($facebook, FILTER_VALIDATE_URL) !== false)) echo '<a class="footer-icon" href="' . $facebook . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="social_Link"><span class="icon-facebook"></span></a>';
-                            if (!empty($linkedin) && (filter_var($linkedin, FILTER_VALIDATE_URL) !== false)) echo '<a class="footer-icon" href="' . $linkedin . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="social_Link"><span class="icon-linkedin"></span></a>';
-                            echo '</div>';
-                        endif; ?>
-                    </div>
-                </div>
-            </div>
+    <div class="container mx-auto">
+        <div class="footer-copyright-sec-inner">
+            <p class="copyright">© <?php echo date('Y'); ?> Wired To Remote. All rights reserved.</p>
+
+            <?php
+            $has_social = (
+                (!empty($facebook) && filter_var($facebook, FILTER_VALIDATE_URL)) ||
+                (!empty($linkedin) && filter_var($linkedin, FILTER_VALIDATE_URL)) ||
+                (!empty($instagram) && filter_var($instagram, FILTER_VALIDATE_URL))
+            );
+
+            if ($has_social) :
+                echo '<div class="footer-icon-sec">';
+
+                if (!empty($facebook) && filter_var($facebook, FILTER_VALIDATE_URL)) {
+                    echo '<a class="footer-icon" href="' . esc_url($facebook) . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="Facebook"><span class="icon-facebook"></span></a>';
+                }
+
+                if (!empty($linkedin) && filter_var($linkedin, FILTER_VALIDATE_URL)) {
+                    echo '<a class="footer-icon" href="' . esc_url($linkedin) . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="LinkedIn"><span class="icon-linkedin"></span></a>';
+                }
+
+                if (!empty($instagram) && filter_var($instagram, FILTER_VALIDATE_URL)) {
+                    echo '<a class="footer-icon" href="' . esc_url($instagram) . '" rel="noopener noreferrer nofollow" target="_blank" aria-label="Instagram"><span class="icon-instagram"></span></a>';
+                }
+
+                echo '</div>';
+            endif;
+            ?>
+        </div>
+    </div>
+</div>
+
         </footer>
 
         <?php wp_footer(); ?>
@@ -129,6 +178,7 @@
                 });
             });
         </script>
+
 
 
 
