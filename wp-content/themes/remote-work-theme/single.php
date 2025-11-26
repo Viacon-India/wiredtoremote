@@ -450,12 +450,53 @@
                                     <img src="<?php echo get_template_directory_uri(); ?>/images/down-icon.svg" alt="toc icon">
                                 </button>
                             </div>
+                            
 
                             <div class="panel md:block">
                                 <ul id="toc" class="box-item-sec">
                                     <?php echo table_of_content('box-item-wrapper', 'box-item box-line'); ?>
                                 </ul>
                             </div>
+                            <br>
+                            
+                            
+                             <div class="panel md:block">
+                                 
+                                  <h2 class="toc-title">Follow Us On Google</h2> <br>
+                                          <a href="https://www.google.com/preferences/source?q=wiredtoremote.com"
+                                   target="_blank"
+                                   style="
+                                        position: relative;
+                                        display: inline-block;
+                                   "
+                                   onmouseover="this.querySelector('.tip').style.opacity='1';"
+                                   onmouseout="this.querySelector('.tip').style.opacity='0';"
+                                >
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/wiredtoremote.png" alt="Badge">
+                        
+                                    <!-- Tooltip element -->
+                                    <span class="tip"
+                                          style="
+                                              position: absolute;
+                                              bottom: 110%;
+                                              left: 50%;
+                                              transform: translateX(-50%);
+                                              background: #000;
+                                              color: #fff;
+                                              padding: 6px 10px;
+                                              border-radius: 6px;
+                                              font-size: 12px;
+                                              white-space: nowrap;
+                                              opacity: 0;
+                                              pointer-events: none;
+                                              transition: opacity .25s ease;
+                                          ">
+                                        Follow us on Google
+                                    </span>
+                                </a>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                     <div class="single-post-content-wrapper">
