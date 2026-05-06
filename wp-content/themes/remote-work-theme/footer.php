@@ -24,6 +24,15 @@
                                 </figure>
                             </a>
                             <?php if (!empty($footer_text)) echo '<p class="footer-desc">' . $footer_text . '</p>'; ?><br>
+                            <p style="margin-bottom:1;" class="footer-desc">
+                            To Reach Out To The <strong>Wired To Remote</strong> Team at 
+                            <a href="mailto:info@redhatmedia.net"
+                               style="color:#fff; text-decoration:none;"
+                               onmouseover="this.style.color='#6a5acd'; this.style.textDecoration='underline';"
+                               onmouseout="this.style.color='#fff'; this.style.textDecoration='none';">
+                                info@redhatmedia.net
+                            </a>
+                        </p><br>
                             
                            <!--google badge-->
                             <a href="https://www.google.com/preferences/source?q=wiredtoremote.com" target="_blank"   style="position: relative;  display: inline-block; "   onmouseover="this.querySelector('.tip').style.opacity='1';" onmouseout="this.querySelector('.tip').style.opacity='0';" >
