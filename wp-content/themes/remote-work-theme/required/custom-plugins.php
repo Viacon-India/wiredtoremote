@@ -47,7 +47,7 @@ function theme_settings() {
 	add_settings_field('subscription_text', 'Subscription Content', 'footer_text_callback', 'theme_menu', 'footer_settings','subscription_text');
 	register_setting('theme_menu','subscription_text', 'esc_attr');
 	
-	$socials = array('facebook','linkedin','instagram');
+	$socials = array('facebook','linkedin','instagram', 'pinterest');
 	foreach($socials as $social){
 		add_settings_field($social, ucwords(str_replace('_',' ',$social)).' Link', 'social_content_callback', 'theme_menu', 'footer_settings',$social);
 		register_setting('theme_menu',$social, 'esc_attr');
