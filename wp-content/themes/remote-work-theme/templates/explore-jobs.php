@@ -29,7 +29,7 @@ get_header(); ?>
 
 /* ── WRAPPER ────────────────────────────────────────────────── */
 #jb-root {
-  background: var(--bg);
+  background: #f5f9fc;
   min-height: 100vh;
   font-family: var(--font-body);
   color: var(--ink);
