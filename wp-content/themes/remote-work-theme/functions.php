@@ -201,3 +201,100 @@ function wrap_paragraphs_with_link_class($content) {
     }, $content);
 }
 add_filter('the_content', 'wrap_paragraphs_with_link_class', 20);
+
+
+
+//***************************** Apply Jobs Filter Function*************/////////////
+
+add_action( 'wp_ajax_jb_proxy',        'jb_proxy_handler' );
+add_action( 'wp_ajax_nopriv_jb_proxy', 'jb_proxy_handler' );
+
+function jb_proxy_handler() {
+
+    $src = isset( $_GET['src'] ) ? sanitize_key( $_GET['src'] ) : '';
+
+    $endpoints = array(
+        'himalayas_0' => 'https://himalayas.app/jobs/api?limit=20&offset=0',
+        'himalayas_1' => 'https://himalayas.app/jobs/api?limit=20&offset=20',
+        'himalayas_2' => 'https://himalayas.app/jobs/api?limit=20&offset=40',
+        'remoteok'    => 'https://remoteok.com/api',
+        
+    );
+
+    if ( ! array_key_exists( $src, $endpoints ) ) {
+        wp_send_json_error( 'Unknown source: ' . $src, 400 );
+        return;
+    }
+
+    $url = $endpoints[ $src ];
+
+    // ── Use raw cURL (not wp_remote_get) so we fully control headers ──────
+    if ( ! function_exists( 'curl_init' ) ) {
+        wp_send_json_error( 'cURL not available on this server', 500 );
+        return;
+    }
+
+    $ch = curl_init();
+    curl_setopt_array( $ch, array(
+        CURLOPT_URL            => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,   // follow any redirects
+        CURLOPT_MAXREDIRS      => 5,
+        CURLOPT_TIMEOUT        => 20,
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_ENCODING       => '',     // accept gzip/deflate
+        CURLOPT_HTTPHEADER     => array(
+            'Accept: application/json, text/javascript, */*; q=0.01',
+            'Accept-Language: en-US,en;q=0.9',
+            'Referer: https://remoteok.com/',                   // required by RemoteOK
+            'X-Requested-With: XMLHttpRequest',
+        ),
+        CURLOPT_USERAGENT      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                                 . 'AppleWebKit/537.36 (KHTML, like Gecko) '
+                                 . 'Chrome/124.0.0.0 Safari/537.36',
+    ) );
+
+    $body    = curl_exec( $ch );
+    $http_code = (int) curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+    $curl_err  = curl_error( $ch );
+    curl_close( $ch );
+
+    // ── Error handling with debug info ────────────────────────────────────
+    if ( $body === false || $curl_err ) {
+        wp_send_json_error( 'cURL error: ' . $curl_err, 502 );
+        return;
+    }
+
+    if ( $http_code !== 200 ) {
+        // Return the upstream status + first 200 chars of body for debugging
+        wp_send_json_error(
+            array(
+                'message'     => 'Upstream returned HTTP ' . $http_code,
+                'source'      => $src,
+                'body_preview' => substr( $body, 0, 200 ),
+            ),
+            502
+        );
+        return;
+    }
+
+    // ── Validate it's actually JSON before passing through ────────────────
+    $decoded = json_decode( $body );
+    if ( json_last_error() !== JSON_ERROR_NONE ) {
+        wp_send_json_error(
+            array(
+                'message'     => 'Upstream returned non-JSON',
+                'source'      => $src,
+                'body_preview' => substr( $body, 0, 200 ),
+            ),
+            502
+        );
+        return;
+    }
+
+    // ── Pass clean JSON straight to the browser ───────────────────────────
+    header( 'Content-Type: application/json; charset=utf-8' );
+    header( 'Cache-Control: public, max-age=300' ); // 5-min browser cache
+    echo $body;
+    wp_die();
+}
