@@ -65,10 +65,16 @@ $cat4_posts = new WP_Query(array(
                 <a href="<?php echo home_url('/about-us'); ?>" class="common-btn">About us <span class="icon-arrow"></span></a>
             </div>
             <div class="banner-image-sec">
-                <figure class="banner-image-sec-wrapper">
-                    <video class="img-responsive" autoplay loop muted playsinline>
-                        <source src="<?php echo get_template_directory_uri(); ?>/images/Remote_GIF.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
+               <figure class="banner-image-sec-wrapper">
+                    <video class="img-responsive"
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        preload="metadata">
+                
+                        <source src="<?php echo get_template_directory_uri(); ?>/images/Remote_GIF.mp4"
+                                type="video/mp4">
                     </video>
                 </figure>
             </div>
@@ -83,7 +89,7 @@ if ($cat1_posts->have_posts()) :
     <section class="home-idea-sec">
         <div class=" container mx-auto ">
             <h2 class="home-page-common-title font-bold home-def-title">
-                <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
+                <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="Digital Nomads">
                 <?php echo $cat1->name; ?>
             </h2>
             <?php echo (!empty($cat1->description)) ? '<p class="text-[#091A27] text-[18px] italic w-full md:w-[60%]">' . $cat1->description . '</p>' : ''; ?>
@@ -145,7 +151,7 @@ if ($cat1_posts->have_posts()) :
                 <h2 class="text-[#091A27] text-[32px] sm:text-[50px] md:text-[54px] leading-[1] font-bold">An Optimized Resume No Employer Can Turn Down</h2>
                 <p class="text-[18px] text-[#091A27] italic pt-4 md:pt-6 lg:pt-10 w-full lg:w-[60%]">Your resume could be the reason why the Best Remote Employers are not Contacting You. Get your Current resume Fixed, Or Allow Us to Build One From the Scratch.</p>
                 <div class="home-idea-sec-common-btn-wrapper !justify-start">
-                    <a href="<?php echo home_url('submit-resume'); ?>" class="common-btn">
+                    <a href="<?php echo home_url('/my-resume'); ?>" class="common-btn">
                         Submit Resume <span class="icon-arrow"></span>
                     </a>
                 </div>
@@ -155,9 +161,16 @@ if ($cat1_posts->have_posts()) :
             </div>
             <div class="w-full lg:w-[50%]">
                 <figure class="w-full h-fit">
-                    <video class="w-full h-full object-contain" autoplay loop muted playsinline>
-                        <source src="<?php echo get_template_directory_uri(); ?>/images/Resume_Job_GIF.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
+                    <video class="w-full h-full object-contain"
+                           autoplay
+                           loop
+                           muted
+                           playsinline
+                           preload="metadata">
+                
+                        <source src="<?php echo get_template_directory_uri(); ?>/images/Resume_Job_GIF.mp4"
+                                type="video/mp4">
+                
                     </video>
                 </figure>
             </div>
@@ -202,7 +215,7 @@ if ($cat1_posts->have_posts()) :
     <section class="home-grow-sec">
         <div class="container mx-auto">
             <h2 class="home-page-common-title font-bold home-def-title">
-                <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="def title after image">
+                <img class="home-def-title-image" src="<?php echo get_template_directory_uri(); ?>/images/extra-line-after.svg" alt="Remote Recruiters">
                 <?php echo $cat4->name; ?>
             </h2>
             <?php echo (!empty($cat4->description)) ? '<div class="common-half-dsc-wrapper"><p class="common-half-dsc">' . $cat4->description . '</p></div>' : ''; ?>
