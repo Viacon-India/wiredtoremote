@@ -151,7 +151,7 @@ if ($cat1_posts->have_posts()) :
                 <h2 class="text-[#091A27] text-[32px] sm:text-[50px] md:text-[54px] leading-[1] font-bold">An Optimized Resume No Employer Can Turn Down</h2>
                 <p class="text-[18px] text-[#091A27] italic pt-4 md:pt-6 lg:pt-10 w-full lg:w-[60%]">Your resume could be the reason why the Best Remote Employers are not Contacting You. Get your Current resume Fixed, Or Allow Us to Build One From the Scratch.</p>
                 <div class="home-idea-sec-common-btn-wrapper !justify-start">
-                    <a href="<?php echo home_url('/my-resume'); ?>" class="common-btn">
+                    <a href="<?php echo home_url('/free-resume-builder'); ?>" class="common-btn">
                         Submit Resume <span class="icon-arrow"></span>
                     </a>
                 </div>
