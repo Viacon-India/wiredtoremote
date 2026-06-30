@@ -42,6 +42,8 @@ $pinterest         = get_option('pinterest');
 
                     <br>
 
+                    <?php /* ?>
+
                     <p class="footer-desc" style="margin-bottom:1px;">
                         To Reach Out To The <strong>Wired To Remote</strong> Team at
                         <a href="mailto:info@redhatmedia.net"
@@ -51,6 +53,7 @@ $pinterest         = get_option('pinterest');
                             info@redhatmedia.net
                         </a>
                     </p>
+                    <?php */ ?>
 
                     <br>
 
